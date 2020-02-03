@@ -8,9 +8,25 @@ services:
       context: ui/
       dockerfile: Dockerfile
     volumes:
-      - '.:/app'
+      - './ui:/app'
       - '/app/node_modules'
     ports:
       - '3000:3000'
     environment:
       - NODE_ENV=development
+
+  api:
+    container_name: api
+    build:
+      context: api/
+      dockerfile: Dockerfile
+    stdin_open: true
+    volumes:
+      - ./api:/app
+      - gradle_cache:/root/.gradle
+    ports:
+      - "8081:8081"
+    working_dir: /app
+    command: bash -c 'bash'
+volumes:
+  gradle_cache:
