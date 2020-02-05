@@ -19,7 +19,7 @@ RUN apt-get update && \
     apt-get install -y ant && \
     apt-get clean
 
-RUN apt-get install wget
+RUN apt-get install wget -y
 
 RUN update-ca-certificates && \
     wget -q https://services.gradle.org/distributions/gradle-4.10.2-bin.zip && \
