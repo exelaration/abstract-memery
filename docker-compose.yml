@@ -4,9 +4,7 @@ services:
 
   ui:
     container_name: ui
-    build:
-      context: ui/
-      dockerfile: Dockerfile
+    build: ui
     volumes:
       - ./ui:/app
     ports:
@@ -16,16 +14,11 @@ services:
 
   api:
     container_name: api
-    build:
-      context: api/
-      dockerfile: Dockerfile
-    stdin_open: true
+    build: api
     volumes:
       - ./api:/app
       - gradle_cache:/root/.gradle
     ports:
       - 8080:8080
-    working_dir: /app
-    command: bash -c 'bash'
 volumes:
   gradle_cache:
