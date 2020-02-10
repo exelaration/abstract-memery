@@ -4,6 +4,7 @@ build/
 bin/
 !**/src/main/**
 !**/src/test/**
+/images
 
 ### STS ###
 .apt_generated
