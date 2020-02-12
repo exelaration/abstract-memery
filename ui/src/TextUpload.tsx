@@ -21,7 +21,7 @@ class TextUpload extends React.Component<any, any> {
                 this.setState({errMsg: err});
             }
             else{
-                axios.post('http://localhost:8080/', ({
+                axios.post('http://localhost:8080/upload', ({
                     topText: topText, 
                     bottomText: bottomText
                 })).then(res => {
