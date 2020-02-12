@@ -1,7 +1,10 @@
 package com.exelaration.abstractmemery.repositories;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+// import com.exelaration.abstractmemery.domain.Caption;
+// import org.springframework.data.jpa.repository.JpaRepository;
+// import org.springframework.stereotype.Repository;
 
-interface MemeRepository extends JpaRepository<Caption, Long> {
+// @Repository
+// public interface MemeRepository extends JpaRepository<Caption, Long> {
 
-}
+// }
