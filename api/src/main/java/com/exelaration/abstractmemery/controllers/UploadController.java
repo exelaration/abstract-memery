@@ -14,18 +14,26 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin(value = "http://localhost:3000")
 public class UploadController {
 
-    @GetMapping(value = "/upload")
+    @GetMapping(value = "/upload", produces = "application/json")
+    @ResponseBody
     public ResponseEntity<?> showText(@RequestBody Caption caption){
         Logger logger = LoggerFactory.getLogger(UploadController.class);
-        logger.info("Top Text: " + caption.getTopText() + "\nBottom Text: " + caption.getBottomText());
-        return new ResponseEntity<>(HttpStatus.OK);
-        // System.out.println("Top Text: " + caption.getTopText() + "\nBottom Text: " + caption.getBottomText());
+        logger.info("\nGet Request\nTop Text: " + caption.getTopText() + "\nBottom Text: " + caption.getBottomText());
+        return new ResponseEntity<>(caption, HttpStatus.OK);
+    }
+
+    @PostMapping("/upload")
+    public ResponseEntity newCaption(@RequestBody Caption caption) {
+        Logger logger = LoggerFactory.getLogger(UploadController.class);
+        logger.info("\nPost Request\nTop Text: " + caption.getTopText() + "\nBottom Text: " + caption.getBottomText());
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 
     // @Autowired
@@ -38,11 +46,6 @@ public class UploadController {
     // @GetMapping("/upload")
     // List<Caption> returnAll() {
     //     return repository.findAll();
-    // }
-
-    // @PostMapping("/upload")
-    // Caption newCaption(@RequestBody Caption newCaption) {
-    //     return repository.save(newCaption);
     // }
 
 }
