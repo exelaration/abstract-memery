@@ -2,14 +2,8 @@ package com.exelaration.abstractmemery.domains;
 
 import lombok.Data;
 
-// import javax.persistence.Entity;
-// import javax.persistence.GeneratedValue;
-// import javax.persistence.Id;
-
 @Data
-// @Entity
 public class Caption {
-    // private @Id @GeneratedValue Long id;
     private String topText;
     private String bottomText;
 

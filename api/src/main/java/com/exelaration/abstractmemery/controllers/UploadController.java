@@ -35,17 +35,4 @@ public class UploadController {
         logger.info("\nPost Request\nTop Text: " + caption.getTopText() + "\nBottom Text: " + caption.getBottomText());
         return ResponseEntity.ok(HttpStatus.OK);
     }
-
-    // @Autowired
-    // private final MemeRepository repository;
-
-    // HomeController(MemeRepository repository) {
-    //     this.repository = repository;
-    // }
-
-    // @GetMapping("/upload")
-    // List<Caption> returnAll() {
-    //     return repository.findAll();
-    // }
-
 }
