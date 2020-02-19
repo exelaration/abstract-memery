@@ -5,6 +5,7 @@ bin/
 !**/src/main/**
 !**/src/test/**
 /images
+lombok.config
 
 ### STS ###
 .apt_generated
