@@ -11,14 +11,4 @@ public class Caption {
         this.topText = topText;
         this.bottomText = bottomText;
     }
-
-    public String getTopText() {
-        return topText;
-    }
-
-    public String getBottomText() {
-        return bottomText;
-    }
-
-
 }
