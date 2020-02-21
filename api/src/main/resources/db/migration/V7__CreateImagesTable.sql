@@ -1,0 +1,4 @@
+CREATE TABLE IF NOT EXISTS Images (
+    id SERIAL NOT NULL PRIMARY KEY,
+    file_name VARCHAR(200)
+);

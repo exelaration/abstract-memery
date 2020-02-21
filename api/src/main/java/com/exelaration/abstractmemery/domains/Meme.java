@@ -5,23 +5,26 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "images")
-public class Image {
+@Table(name = "memes")
+public class Meme {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
 
-  @Transient private String fileData;
+  private String memeName;
 
-  private String fileName;
+  private String topText;
 
-  // @ManyToOne
-  // @JoinColumn (name = "meme_id")
-  // private Meme meme;
+  private String bottomText;
+
+  // @OneToMany (mappedBy = "meme")
+  // private List<Image> images;
+
+  // @OneToMany (mappedBy = "meme")
+  // private List<Tag> tags;
 }
