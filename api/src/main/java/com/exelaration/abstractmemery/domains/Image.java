@@ -1,4 +1,6 @@
 package com.exelaration.abstractmemery.domains;
+import javax.persistence.Entity;
+
 import lombok.Data;
 
 import javax.persistence.Entity;
