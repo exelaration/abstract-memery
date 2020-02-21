@@ -41,6 +41,8 @@ dependencies {
 	testImplementation 'org.springframework.security:spring-security-test'
 	compile 'org.flywaydb:flyway-core:6.2.3'
 	testCompile("org.flywaydb.flyway-test-extensions:flyway-spring-test:6.1.0")
+	testCompile('org.junit.jupiter:junit-jupiter-engine:5.2.0')
+	testCompile('org.mockito:mockito-junit-jupiter:2.23.0')
 	testRuntime('org.flywaydb:flyway-core:6.2.3')
 }
 
