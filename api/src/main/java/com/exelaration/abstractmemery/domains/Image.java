@@ -1,28 +1,16 @@
 package com.exelaration.abstractmemery.domains;
+import lombok.Data;
 
+@Data
 public class Image {
 
     private String fileData;
     private String fileName;
+    private String fileLocation;
 
-    public Image (String fileData, String fileName) {
+    public Image (String fileData, String fileName, String fileLocation) {
         this.fileData = fileData;
         this.fileName = fileName;
-    }
-
-    public String getFileData() {
-        return fileData;
-    }
-
-    public void setFileData(String fileData) {
-        this.fileData = fileData;
-    }
-
-    public String getFileName() {
-        return fileName;
-    }
-
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
+        this.fileLocation = fileLocation;
     }
 }

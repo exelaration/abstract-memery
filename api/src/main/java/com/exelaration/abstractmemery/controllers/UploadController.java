@@ -27,7 +27,7 @@ public class UploadController {
 		if (file == null) {
 			throw new RuntimeException("You must select the a file for uploading");
 		}
-		Image image = new Image(null, null);
+		Image image = new Image(null, null, null);
 		try {
 			//saves the image 
 			byte[] bytes = file.getBytes();
