@@ -1,15 +1,26 @@
 import React from 'react';
 import axios from 'axios';
 
-class TextUpload extends React.Component<any, any> {
+type TextProps = {}
+
+type TextState = {
+    topText: String,
+    bottomText: String,
+    errMsg: String
+}
+
+class TextUpload extends React.Component<TextProps, TextState> {
     constructor(props: any) {
         super(props);
             this.state = { topText: '', bottomText: '', errMsg: '' };
         }
-        myChangeHandler = (event: any) => {
-            let nam = event.target.name;
+        topTextChangeHandler = (event: any) => {
             let val = event.target.value;
-            this.setState({[nam]: val});
+            this.setState({topText: val});
+        }
+        bottomTextChangeHandler = (event: any) => {
+            let val = event.target.value;
+            this.setState({bottomText: val});
         }
         mySubmitHandler = (event: any) => {
             event.preventDefault();
@@ -21,7 +32,7 @@ class TextUpload extends React.Component<any, any> {
                 this.setState({errMsg: err});
             }
             else{
-                axios.post('http://localhost:8080/upload/', ({
+                axios.post('http://localhost:8080/meme/', ({
                     topText: topText, 
                     bottomText: bottomText
                 })).then(res => {
@@ -38,12 +49,12 @@ class TextUpload extends React.Component<any, any> {
                 <input 
                     type='text'
                     name='topText'
-                    onChange={this.myChangeHandler} />
+                    onChange={this.topTextChangeHandler} />
                 <p>Enter your bottom text caption:</p>
                 <input 
                     type='text'
                     name='bottomText'
-                    onChange={this.myChangeHandler} />
+                    onChange={this.bottomTextChangeHandler} />
                 <br/>
                 {this.state.errMsg}
                 <br/>
