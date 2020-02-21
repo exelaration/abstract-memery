@@ -16,7 +16,7 @@ public class ImageService {
     private MemeRepository memeRepository;
     
     public void add(Image image) {
-        memeRepository.save(toEntity(image));
+        memeRepository.save(image);
     }
     public void delete(long id) {
         memeRepository.deleteById(id);
@@ -24,13 +24,13 @@ public class ImageService {
     public List<Image> getImages() {
         return (List<Image>) memeRepository.findAll();
     }
-    public Image getImageById(long id) {
-        Optional<Image> optionalImage = memeRepository.findById(id);
-        return optionalImage.orElseThrow(() -> new DogNotFoundException("Couldn't find a Dog with id: " + id));
-    }
-    private Image toEntity(Image image) {
-        Image entity = new Image();
-        entity.setFileLocation(image.getFileLocation());
-        return entity;
-    }
+    // public Image getImageById(long id) {
+    //     Optional<Image> optionalImage = memeRepository.findById(id);
+    //     return optionalImage.orElseThrow(() -> new DogNotFoundException("Couldn't find a Dog with id: " + id));
+    // }
+    // private Image toEntity(Image image) {
+    //     Image entity = new Image();
+    //     entity.setFileLocation(image.getFileLocation());
+    //     return entity;
+    // }
 }
