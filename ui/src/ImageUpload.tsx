@@ -4,7 +4,8 @@ import './ImageUpload.css';
 
 type ImageProps = {
     topText: String,
-    bottomText: String
+    bottomText: String,
+    sendMemeName: CallableFunction
 }
 
 type ImageState = {
@@ -37,8 +38,9 @@ class ImageUpload extends React.Component<ImageProps, ImageState> {
       }
       onChangeHandler = (e: any) => {
         this.setState({file: e.target.files[0]});
+        this.props.sendMemeName(e.target.files[0].name)
     }
-      render() {
+    render() {
         return (
             <div className='upload'>
                 <div id="textWrapping">

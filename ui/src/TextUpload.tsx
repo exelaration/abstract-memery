@@ -4,7 +4,8 @@ import './TextUpload.css'
 
 type TextProps = {
     sendTopText: CallableFunction,
-    sendBottomText: CallableFunction
+    sendBottomText: CallableFunction,
+    memeName: String
 }
 
 type TextState = {
@@ -41,7 +42,8 @@ class TextUpload extends React.Component<TextProps, TextState> {
             else{
                 axios.post('http://localhost:8080/meme/', ({
                     topText: topText, 
-                    bottomText: bottomText
+                    bottomText: bottomText,
+                    memeName: this.props.memeName
                 })).then(res => {
                     console.log(res);
                     console.log(res.data);
