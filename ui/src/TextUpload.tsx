@@ -1,13 +1,18 @@
 import React from 'react';
 import axios from 'axios';
+import './TextUpload.css'
 
-type TextProps = {}
+type TextProps = {
+    sendTopText: CallableFunction,
+    sendBottomText: CallableFunction
+}
 
 type TextState = {
     topText: String,
     bottomText: String,
     errMsg: String
 }
+
 
 class TextUpload extends React.Component<TextProps, TextState> {
     constructor(props: any) {
@@ -17,10 +22,12 @@ class TextUpload extends React.Component<TextProps, TextState> {
         topTextChangeHandler = (event: any) => {
             let val = event.target.value;
             this.setState({topText: val});
+            this.props.sendTopText(val);
         }
         bottomTextChangeHandler = (event: any) => {
             let val = event.target.value;
             this.setState({bottomText: val});
+            this.props.sendBottomText(val);
         }
         mySubmitHandler = (event: any) => {
             event.preventDefault();
@@ -44,21 +51,22 @@ class TextUpload extends React.Component<TextProps, TextState> {
     render() {
         return (
             <form onSubmit={this.mySubmitHandler}>
-                <h1>Upload Your Meme</h1>
-                <p>Enter your top text caption:</p>
+                <p className='inputPrompt'>Enter your top text caption:</p>
                 <input 
                     type='text'
                     name='topText'
+                    placeholder="Top Text..."
                     onChange={this.topTextChangeHandler} />
-                <p>Enter your bottom text caption:</p>
+                <p className="inputPrompt">Enter your bottom text caption:</p>
                 <input 
                     type='text'
                     name='bottomText'
+                    placeholder="Bottom Text..."
                     onChange={this.bottomTextChangeHandler} />
                 <br/>
                 {this.state.errMsg}
                 <br/>
-                <input
+                <input className="button"
                     type='submit'
                 />
             </form>

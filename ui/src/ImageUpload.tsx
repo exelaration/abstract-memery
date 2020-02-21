@@ -1,7 +1,11 @@
 import * as React from 'react';
 import axios from 'axios';
+import './ImageUpload.css';
 
-type ImageProps = {}
+type ImageProps = {
+    topText: String,
+    bottomText: String
+}
 
 type ImageState = {
     imageData: String,
@@ -36,11 +40,16 @@ class ImageUpload extends React.Component<ImageProps, ImageState> {
     }
       render() {
         return (
-            <div>
-                <img src={"data:image/jpeg;base64," + this.state.imageData} alt=""></img>
+            <div className='upload'>
+                <div id="textWrapping">
+                    <img id="image" src={"data:image/jpeg;base64," + this.state.imageData} alt=""></img>
+                    <p className='textFormatting' id="topText">{this.props.topText}</p>
+                    <p className='textFormatting' id="bottomText">{this.props.bottomText}</p>
+                </div>
                 <form onSubmit={this.handleSubmit}>
-                    <input  type="file" id="image" name="image" onChange={this.onChangeHandler}/>
-                    <button type="submit">Upload Image</button>
+                    <label className="button" htmlFor="browsePhoto">Browse...</label>
+                    <input type="file" name="image" className="button" id="browsePhoto" onChange={this.onChangeHandler}/>
+                    <button className="button" type="submit">Upload Image</button>
                 </form>
             </div>
         );
