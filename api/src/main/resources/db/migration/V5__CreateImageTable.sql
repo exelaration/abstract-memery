@@ -1,5 +1,5 @@
 CREATE TABLE AbstractMemery.images (
     ID SERIAL NOT NULL PRIMARY KEY,
-    memeID SERIAL REFERENCES AbstractMemery.memes(ID),
+    fileName VARCHAR(200),
     fileLocation TEXT
 );
