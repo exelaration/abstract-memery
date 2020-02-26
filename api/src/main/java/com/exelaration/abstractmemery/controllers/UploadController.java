@@ -24,9 +24,6 @@ public class UploadController {
 	@Autowired
 	private ImageService imageService;
 
-	// @Autowired(required = false)
-	// Image image;
-
 	public static final String uploadingDir = "/app/src/main/resources/images/";
 
 	@PostMapping("/")
