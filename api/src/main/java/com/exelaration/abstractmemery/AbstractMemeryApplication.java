@@ -7,14 +7,14 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 import java.io.File;
 
-import com.exelaration.abstractmemery.controllers.UploadController;
+import com.exelaration.abstractmemery.services.FileStorageService;
 
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
 @EnableJpaAuditing
 public class AbstractMemeryApplication {
 
 	public static void main(String[] args) {
-		new File(UploadController.uploadingDir).mkdirs();
+		new File(FileStorageService.uploadingDir).mkdirs();
 		SpringApplication.run(AbstractMemeryApplication.class, args);
 	}
 
