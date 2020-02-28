@@ -4,8 +4,12 @@ import com.exelaration.abstractmemery.domains.Image;
 import com.exelaration.abstractmemery.services.FileStorageService;
 import com.exelaration.abstractmemery.services.ImageService;
 import com.exelaration.abstractmemery.services.MetadataService;
+<<<<<<< HEAD
 import java.io.IOException;
 import org.apache.tomcat.util.codec.binary.Base64;
+=======
+
+>>>>>>> separate out image upload into different services
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
