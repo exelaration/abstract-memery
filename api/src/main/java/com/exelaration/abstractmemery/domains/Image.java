@@ -18,12 +18,12 @@ import lombok.Data;
 import com.exelaration.abstractmemery.domains.Tag;
 
 @Data
-@Entity
+// @Entity
 @Table(name="images")
 public class Image extends AuditModel{
     
     @Id 
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    // @GeneratedValue(strategy=GenerationType.AUTO)
     private long id;
 
     @Transient 
@@ -33,7 +33,5 @@ public class Image extends AuditModel{
 
     private String fileLocation;
 
-    @OneToMany (cascade=CascadeType.ALL)
-    @JoinColumn(name="image_id")
     private Set<Tag> tags;
 }

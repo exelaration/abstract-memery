@@ -12,16 +12,16 @@ import javax.persistence.Transient;
 import lombok.Data;
 
 @Data
-@Entity
+// @Entity
 @Table(name="tags")
 public class Tag {
     
     @Id 
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    // @GeneratedValue(strategy=GenerationType.AUTO)
     private long id;
 
     private String tag;
 
-    @ManyToOne 
+    // @ManyToOne 
     private Image image;
 }
