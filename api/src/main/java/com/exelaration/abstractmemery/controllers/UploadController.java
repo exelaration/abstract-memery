@@ -1,7 +1,10 @@
 package com.exelaration.abstractmemery.controllers;
 
+<<<<<<< HEAD
 import com.exelaration.abstractmemery.domains.Image;
 import com.exelaration.abstractmemery.services.ImageService;
+=======
+>>>>>>> separated out image upload into differe services
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
