@@ -18,7 +18,7 @@ import lombok.Data;
 import com.exelaration.abstractmemery.domains.Tag;
 
 @Data
-// @Entity
+@Entity
 @Table(name="images")
 public class Image extends AuditModel{
     
@@ -33,5 +33,6 @@ public class Image extends AuditModel{
 
     private String fileLocation;
 
+    @Transient
     private Set<Tag> tags;
 }
