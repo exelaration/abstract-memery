@@ -7,7 +7,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.exelaration.abstractmemery.domains.Image;
 
-@Service
 @Transactional
 public interface ImageService {
 

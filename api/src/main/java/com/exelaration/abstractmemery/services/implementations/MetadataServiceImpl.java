@@ -8,7 +8,9 @@ import com.exelaration.abstractmemery.repositories.MemeRepository;
 import com.exelaration.abstractmemery.services.MetadataService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service("metadataService")
 public class MetadataServiceImpl implements MetadataService{
     @Autowired 
     private MemeRepository memeRepository;

@@ -3,6 +3,7 @@ package com.exelaration.abstractmemery.services.implementations;
 import com.exelaration.abstractmemery.domains.Image;
 import com.exelaration.abstractmemery.services.FileStorageService;
 
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -11,6 +12,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.apache.tomcat.util.codec.binary.Base64;
 
+@Service("fileStorageService")
 public class FileStorageServiceImpl implements FileStorageService{
     public Image save(MultipartFile file) {
         if (file == null) {

@@ -7,7 +7,6 @@ import com.exelaration.abstractmemery.domains.Image;
 
 import org.springframework.stereotype.Service;
 
-@Service
 public interface MetadataService {
 
     public static final String uploadingDir = "/app/src/main/resources/images/";
