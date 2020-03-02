@@ -4,11 +4,11 @@ import lombok.Data;
 
 @Data
 public class Caption {
-    private String topText;
-    private String bottomText;
+  private String topText;
+  private String bottomText;
 
-    Caption(String topText, String bottomText) {
-        this.topText = topText;
-        this.bottomText = bottomText;
-    }
+  Caption(String topText, String bottomText) {
+    this.topText = topText;
+    this.bottomText = bottomText;
+  }
 }
