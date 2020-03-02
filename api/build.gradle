@@ -10,6 +10,7 @@ plugins {
 	id "org.flywaydb.flyway" version "6.2.3"
 	id 'java'
 	id "io.freefair.lombok" version "4.1.6"
+	id 'com.github.sherter.google-java-format' version '0.8'
 }
 
 group = 'com.exelaration'
