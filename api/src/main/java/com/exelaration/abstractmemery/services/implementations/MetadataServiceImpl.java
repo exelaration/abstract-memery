@@ -16,7 +16,7 @@ public class MetadataServiceImpl implements MetadataService {
     return (List<Image>) memeRepository.findAll();
   }
 
-  public Optional<Image> findById(Long id) {
+  public Optional<Image> findById(Integer id) {
     return memeRepository.findById(id);
   }
 
@@ -24,7 +24,7 @@ public class MetadataServiceImpl implements MetadataService {
     return memeRepository.save(image);
   }
 
-  public void deleteById(Long id) {
+  public void deleteById(Integer id) {
     memeRepository.deleteById(id);
   }
 }

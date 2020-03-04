@@ -8,9 +8,9 @@ public interface MetadataService {
 
   public List<Image> findAll();
 
-  public Optional<Image> findById(Long id);
+  public Optional<Image> findById(Integer id);
 
   public Image save(Image image);
 
-  public void deleteById(Long id);
+  public void deleteById(Integer id);
 }

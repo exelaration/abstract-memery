@@ -1,5 +1,4 @@
-CREATE TABLE IF NOT EXISTS Images (
+CREATE TABLE IF NOT EXISTS Tags (
     id SERIAL NOT NULL PRIMARY KEY,
-    tag VARCHAR(200),
-    images_id SERIAL REFERENCES images (id)
+    tag VARCHAR(200)
 );
