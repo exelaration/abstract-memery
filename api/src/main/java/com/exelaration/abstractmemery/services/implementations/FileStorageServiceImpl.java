@@ -1,10 +1,7 @@
 package com.exelaration.abstractmemery.services.implementations;
 
 import com.exelaration.abstractmemery.services.FileStorageService;
-<<<<<<< HEAD
 import java.io.File;
-=======
->>>>>>> run goJF linter
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
