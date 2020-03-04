@@ -18,7 +18,7 @@ public class MemeController {
 
   @PostMapping("/")
   public ResponseEntity addMeme(@RequestBody Caption caption) {
-    Logger logger = LoggerFactory.getLogger(UploadController.class);
+    Logger logger = LoggerFactory.getLogger(MemeController.class);
     logger.info(
         "\nPost Request\nTop Text: "
             + caption.getTopText()

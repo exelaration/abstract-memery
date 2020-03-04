@@ -1,8 +1,7 @@
 package com.exelaration.abstractmemery.services;
 
-import com.exelaration.abstractmemery.domains.Image;
-import org.springframework.web.multipart.MultipartFile;
+import java.io.InputStream;
 
 public interface FileStorageService {
-  public Image save(MultipartFile file);
+  public String save(String fileName, InputStream file);
 }
