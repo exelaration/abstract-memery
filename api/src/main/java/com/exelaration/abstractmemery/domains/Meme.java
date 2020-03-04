@@ -9,16 +9,22 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "tags")
-public class Tag {
+@Table(name = "memes")
+public class Meme {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
 
-  private String tag;
+  private String memeName;
 
-  // @ManyToOne
-  // @JoinColumn (name = "meme_id")
-  // private Meme meme;
+  private String topText;
+
+  private String bottomText;
+
+  // @OneToMany (mappedBy = "meme")
+  // private List<Image> images;
+
+  // @OneToMany (mappedBy = "meme")
+  // private List<Tag> tags;
 }
