@@ -13,7 +13,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Service("fileStorageService")
 public class FileStorageServiceImpl implements FileStorageService {
+  private static final String uploadingDir = "/app/src/main/resources/images/";
+
   public Image save(MultipartFile file) {
+    createDirectory();
     if (file == null) {
       throw new RuntimeException("You must select the a file for uploading");
     }
@@ -35,7 +38,7 @@ public class FileStorageServiceImpl implements FileStorageService {
     return image;
   }
 
-  public void createDirectory() {
-    new File(FileStorageService.uploadingDir).mkdirs();
+  private void createDirectory() {
+    new File(uploadingDir).mkdirs();
   }
 }
