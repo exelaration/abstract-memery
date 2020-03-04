@@ -16,8 +16,8 @@ public class ImageServiceImpl implements ImageService {
   @Autowired private MetadataService metadataService;
 
   public Image save(MultipartFile file) {
+    fileStorageService.createDirectory();
     Image image = fileStorageService.save(file);
-
     return metadataService.save(image);
   }
 }

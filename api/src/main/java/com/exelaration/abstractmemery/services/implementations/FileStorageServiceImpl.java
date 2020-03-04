@@ -2,6 +2,8 @@ package com.exelaration.abstractmemery.services.implementations;
 
 import com.exelaration.abstractmemery.domains.Image;
 import com.exelaration.abstractmemery.services.FileStorageService;
+
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -18,7 +20,6 @@ public class FileStorageServiceImpl implements FileStorageService {
     }
     Image image = new Image();
     try {
-      // saves the image
       byte[] bytes = file.getBytes();
       String fileName = file.getOriginalFilename();
       Path path = Paths.get(uploadingDir + fileName);
@@ -33,5 +34,8 @@ public class FileStorageServiceImpl implements FileStorageService {
       e.printStackTrace();
     }
     return image;
+  }
+  public void createDirectory(){
+    new File(FileStorageService.uploadingDir).mkdirs();
   }
 }

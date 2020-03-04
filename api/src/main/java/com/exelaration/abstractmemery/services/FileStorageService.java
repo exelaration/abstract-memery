@@ -8,4 +8,6 @@ public interface FileStorageService {
   public static final String uploadingDir = "/app/src/main/resources/images/";
 
   public Image save(MultipartFile file);
+
+  public void createDirectory();
 }
