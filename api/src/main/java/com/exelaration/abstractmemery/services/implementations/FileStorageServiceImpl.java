@@ -2,7 +2,6 @@ package com.exelaration.abstractmemery.services.implementations;
 
 import com.exelaration.abstractmemery.domains.Image;
 import com.exelaration.abstractmemery.services.FileStorageService;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -35,7 +34,8 @@ public class FileStorageServiceImpl implements FileStorageService {
     }
     return image;
   }
-  public void createDirectory(){
+
+  public void createDirectory() {
     new File(FileStorageService.uploadingDir).mkdirs();
   }
 }

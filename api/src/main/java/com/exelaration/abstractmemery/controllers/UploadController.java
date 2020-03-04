@@ -14,8 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/upload")
 @CrossOrigin(origins = "http://localhost:3000")
 public class UploadController {
-  @Autowired
-  private ImageService imageService;
+  @Autowired private ImageService imageService;
 
   @PostMapping("/")
   public Image uploadData(@RequestParam("file") MultipartFile file) throws Exception {
