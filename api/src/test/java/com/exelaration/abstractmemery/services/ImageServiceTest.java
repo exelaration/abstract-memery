@@ -20,32 +20,32 @@ import org.springframework.mock.web.MockMultipartFile;
 @ExtendWith(MockitoExtension.class)
 public class ImageServiceTest {
 
-    @Mock
+    @Mock 
     private FileStorageService fileStorageService;
 
-    @Mock
+    @Mock 
     private MetadataService metadataService;
-
+    
     @InjectMocks
-    private ImageServiceImpl imageService;
+    private ImageService imageService;
 
     @Test
-    public void testSaveImageSuccessfully() throws IOException {
+    public void testSaveImageSuccessfully() {
         //look into moving this stuff into a set up method with @before annotation
-        MockMultipartFile mockMultipartFile = new MockMultipartFile("user-image", "test-image.png",
+        MockMultipartFile mockMultipartFile = new MockMultipartFile("user-image", "test-image",
             "image/png", "imageData".getBytes());
 
-        Image expectedImage = new Image();
-        expectedImage.setFileName("test-image.png");
-        expectedImage.setFileData("imageData");
-        expectedImage.setFileLocation("fileLocation");
+        Image mockImage = new Image();
+        mockImage.setFileName("user-image");
+        mockImage.setFileData("imageData");
+        mockImage.setFileLocation("fileLocation");
 
-        Mockito.when(metadataService.save(expectedImage)).thenReturn(expectedImage);
-        Mockito.when(fileStorageService.save("test-image.png", mockMultipartFile.getInputStream())).thenReturn("fileLocation");
+        Mockito.when(metadataService.save(image)).thenReturn(image);
+        Mockito.when(fileStorageService.save("user-image", mockMultipartFile.getInputStream())).thenReturn("fileLocation");
 
-        Image actualImage = imageService.save(mockMultipartFile);
+        Image testImage = imageService.save(mockMultipartFile);
 
-        assertEquals(expectedImage, actualImage);
+        assertThat(testImage).isSameAs(mockImage);
 
     }
 }
