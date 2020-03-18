@@ -40,7 +40,7 @@ public class ImageServiceTest {
         mockImage.setFileData("imageData");
         mockImage.setFileLocation("fileLocation");
 
-        Mockito.when(metadataService.save(image)).thenReturn(image);
+        Mockito.when(metadataService.save(mockImage)).thenReturn(mockImage);
         Mockito.when(fileStorageService.save("user-image", mockMultipartFile.getInputStream())).thenReturn("fileLocation");
 
         Image testImage = imageService.save(mockMultipartFile);
