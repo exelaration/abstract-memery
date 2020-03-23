@@ -1,13 +1,15 @@
 package com.exelaration.abstractmemery.services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.doNothing;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.Charset;
 
 import com.exelaration.abstractmemery.domains.Image;
-import com.exelaration.abstractmemery.services.implementations.FileStorageServiceImpl;
 import com.exelaration.abstractmemery.services.implementations.ImageServiceImpl;
-import com.exelaration.abstractmemery.services.implementations.MetadataServiceImpl;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -31,21 +33,20 @@ public class ImageServiceTest {
 
     @Test
     public void testSaveImageSuccessfully() throws IOException {
-        //look into moving this stuff into a set up method with @before annotation
         MockMultipartFile mockMultipartFile = new MockMultipartFile("user-image", "test-image.png",
-            "image/png", "imageData".getBytes());
-
+            "image/png", "test-image.png".getBytes());
+        
+        InputStream inputStream = new ByteArrayInputStream("chicken".getBytes(Charset.forName("UTF-8")));
         Image expectedImage = new Image();
         expectedImage.setFileName("test-image.png");
         expectedImage.setFileData("imageData");
-        expectedImage.setFileLocation("fileLocation");
 
         Mockito.when(metadataService.save(expectedImage)).thenReturn(expectedImage);
-        Mockito.when(fileStorageService.save("test-image.png", mockMultipartFile.getInputStream())).thenReturn("fileLocation");
+        doNothing().when(fileStorageService).save("test-image.png", inputStream);
 
         Image actualImage = imageService.save(mockMultipartFile);
 
-        assertEquals(expectedImage, actualImage);
+        assertEquals(expectedImage.getFileName(), actualImage.getFileName());
 
     }
 }
