@@ -1,6 +1,7 @@
 package com.exelaration.abstractmemery.services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+<<<<<<< HEAD
 import static org.mockito.Mockito.doNothing;
 
 import java.io.ByteArrayInputStream;
@@ -10,6 +11,15 @@ import java.nio.charset.Charset;
 
 import com.exelaration.abstractmemery.domains.Image;
 import com.exelaration.abstractmemery.services.implementations.ImageServiceImpl;
+=======
+
+import java.io.IOException;
+
+import com.exelaration.abstractmemery.domains.Image;
+import com.exelaration.abstractmemery.services.implementations.FileStorageServiceImpl;
+import com.exelaration.abstractmemery.services.implementations.ImageServiceImpl;
+import com.exelaration.abstractmemery.services.implementations.MetadataServiceImpl;
+>>>>>>> 5a0692a81585455031ec4f96fecea473ead2f06f
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
