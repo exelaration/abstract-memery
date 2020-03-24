@@ -1,10 +1,6 @@
 package com.exelaration.abstractmemery.services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-<<<<<<< HEAD
-=======
-import static org.junit.jupiter.api.Assertions.assertNotNull;
->>>>>>> Fixed unit test for Image service
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 
