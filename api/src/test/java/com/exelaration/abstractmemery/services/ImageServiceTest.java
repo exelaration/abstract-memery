@@ -6,7 +6,6 @@ import static org.mockito.Mockito.verify;
 
 import com.exelaration.abstractmemery.domains.Image;
 import com.exelaration.abstractmemery.services.implementations.ImageServiceImpl;
-import java.io.IOException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -32,7 +31,7 @@ public class ImageServiceTest {
   }
 
   @Test
-  public void imageServiceSave_WhenImageSavedSuccessfully_ExpectImageReturned() throws IOException {
+  public void imageServiceSave_WhenImageSavedSuccessfully_ExpectImageReturned() {
     MockMultipartFile mockMultipartFile =
         new MockMultipartFile(
             "user-image", "test-image.png", "image/png", "test-image.png".getBytes());
@@ -50,25 +49,22 @@ public class ImageServiceTest {
   }
 
   @Test
-  public void imageServiceSave_WhenMetadataSaveUnsuccessful_ExpectEmptyImage() throws IOException {
+  public void imageServiceSave_WhenMetadataSaveUnsuccessful_ExpectEmptyImage() {
     MockMultipartFile mockMultipartFile =
         new MockMultipartFile(
             "user-image", "test-image.png", "image/png", "test-image.png".getBytes());
 
     Mockito.when(metadataService.save(Mockito.any())).thenThrow(new IllegalArgumentException());
-    Image actualImage = imageService.save(mockMultipartFile);
-    assertEquals(null, actualImage.getFileName());
+    assertEquals(null, imageService.save(mockMultipartFile));
   }
 
   @Test
-  public void imageServiceSave_WhenFileStorageSaveUnsuccessful_ExpectEmptyImage()
-      throws IOException {
+  public void imageServiceSave_WhenFileStorageSaveUnsuccessful_ExpectEmptyImage() {
     MockMultipartFile mockMultipartFile =
         new MockMultipartFile(
             "user-image", "test-image.png", "image/png", "test-image.png".getBytes());
 
     doThrow(new RuntimeException()).when(fileStorageService).save(Mockito.any(), Mockito.any());
-    Image actualImage = imageService.save(mockMultipartFile);
-    assertEquals(null, actualImage.getFileName());
+    assertEquals(null, imageService.save(mockMultipartFile));
   }
 }
