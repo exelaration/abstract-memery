@@ -11,7 +11,6 @@ import java.nio.charset.Charset;
 
 import com.exelaration.abstractmemery.domains.Image;
 import com.exelaration.abstractmemery.services.implementations.ImageServiceImpl;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,52 +27,52 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @ExtendWith(SpringExtension.class)
 public class ImageServiceTest {
 
-    @Mock
-    private FileStorageService fileStorageService;
+  @Mock private FileStorageService fileStorageService;
 
-    @Mock
-    private MetadataService metadataService;
+  @Mock private MetadataService metadataService;
 
-    @InjectMocks
-    private ImageServiceImpl imageService;
+  @InjectMocks private ImageServiceImpl imageService;
 
-    @BeforeEach
-    public void init() {
-        MockitoAnnotations.initMocks(this);
-    }
+  @BeforeEach
+  public void init() {
+    MockitoAnnotations.initMocks(this);
+  }
 
-    @Test
-    public void testSaveImageSuccessfully() throws IOException {
-        MockMultipartFile mockMultipartFile = new MockMultipartFile("user-image", "test-image.png",
-            "image/png", "test-image.png".getBytes());
-        
-        Image expectedImage = new Image();
-        expectedImage.setFileName("test-image.png");
-        expectedImage.setFileData("imageData");
+  @Test
+  public void imageServiceSave_WhenImageSavedSuccessfully_ExpectImageReturned() {
+    MockMultipartFile mockMultipartFile =
+        new MockMultipartFile(
+            "user-image", "test-image.png", "image/png", "test-image.png".getBytes());
 
-        Mockito.when(metadataService.save(Mockito.any())).thenReturn(expectedImage);
+    Image expectedImage = new Image();
+    expectedImage.setFileName("test-image.png");
+    expectedImage.setFileData("imageData");
 
-        Image actualImage = imageService.save(mockMultipartFile);
-        
-        assertEquals(expectedImage.getFileName(), actualImage.getFileName());
-        verify(fileStorageService).save(Mockito.eq("test-image.png"), Mockito.any());
-    }
-    @Test
-    public void imageServiceSave_WhenMetadataSaveUnsuccessful_ExpectEmptyImage() throws IOException {
-        MockMultipartFile mockMultipartFile = new MockMultipartFile("user-image", "test-image.png",
-            "image/png", "test-image.png".getBytes());
-        
-        Mockito.when(metadataService.save(Mockito.any())).thenThrow(new IllegalArgumentException());
-        Image actualImage = imageService.save(mockMultipartFile);
-        assertEquals(null, actualImage.getFileName());
-    }
-    @Test
-    public void imageServiceSave_WhenFileStorageSaveUnsuccessful_ExpectEmptyImage() throws IOException {
-        MockMultipartFile mockMultipartFile = new MockMultipartFile("user-image", "test-image.png",
-            "image/png", "test-image.png".getBytes());
+    Mockito.when(metadataService.save(Mockito.any())).thenReturn(expectedImage);
 
-        doThrow(new RuntimeException()).when(fileStorageService).save(Mockito.any(), Mockito.any());
-        Image actualImage = imageService.save(mockMultipartFile);
-        assertEquals(null, actualImage.getFileName());
-    }
+    Image actualImage = imageService.save(mockMultipartFile);
+
+    assertEquals(expectedImage.getFileName(), actualImage.getFileName());
+    verify(fileStorageService).save(Mockito.eq("test-image.png"), Mockito.any());
+  }
+
+  @Test
+  public void imageServiceSave_WhenMetadataSaveUnsuccessful_ExpectEmptyImage() {
+    MockMultipartFile mockMultipartFile =
+        new MockMultipartFile(
+            "user-image", "test-image.png", "image/png", "test-image.png".getBytes());
+
+    Mockito.when(metadataService.save(Mockito.any())).thenThrow(new IllegalArgumentException());
+    assertEquals(null, imageService.save(mockMultipartFile));
+  }
+
+  @Test
+  public void imageServiceSave_WhenFileStorageSaveUnsuccessful_ExpectEmptyImage() {
+    MockMultipartFile mockMultipartFile =
+        new MockMultipartFile(
+            "user-image", "test-image.png", "image/png", "test-image.png".getBytes());
+
+    doThrow(new RuntimeException()).when(fileStorageService).save(Mockito.any(), Mockito.any());
+    assertEquals(null, imageService.save(mockMultipartFile));
+  }
 }

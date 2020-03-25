@@ -4,7 +4,6 @@ import com.exelaration.abstractmemery.domains.Image;
 import com.exelaration.abstractmemery.services.FileStorageService;
 import com.exelaration.abstractmemery.services.ImageService;
 import com.exelaration.abstractmemery.services.MetadataService;
-import java.io.IOException;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +16,7 @@ public class ImageServiceImpl implements ImageService {
 
   @Autowired private MetadataService metadataService;
 
-  public Image save(MultipartFile file) throws IOException {
+  public Image save(MultipartFile file) {
     Image image = new Image();
     String fileName = "";
     try {
@@ -36,8 +35,7 @@ public class ImageServiceImpl implements ImageService {
       return metadataService.save(image);
 
     } catch (Exception e) {
-      Image nullImage = new Image();
-      return nullImage;
+      return null;
     }
   }
 }
