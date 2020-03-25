@@ -2,10 +2,12 @@ import React, { useContext, useState } from 'react';
 import axios from 'axios';
 import { AppDispatchContext, AppActions } from './reducers/AppDispatchReducer';
 import './ImageUpload.css';
+import MemeContent from './MemeContent';
 
 type ImageProps = {
     topText: string,
     bottomText: string
+    memeContentRef: React.RefObject<any>
 }
 
 interface ImageResponse {
@@ -37,15 +39,17 @@ function ImageUpload(props: ImageProps) {
     function onChangeHandler(e: any) {
         setFile(e.target.files[0]);
         dispatch({type: AppActions.updateMemeName, value: e.target.files[0].name});
+        dispatch({type: AppActions.updateMemeContentRef, value: props.memeContentRef});
     }
 
     return (
         <div className='upload'>
-            <div id="textWrapping">
-                <img id="image" src={"data:image/jpeg;base64," + imageData} alt=""></img>
-                <p className='textFormatting' id="topText">{props.topText}</p>
-                <p className='textFormatting' id="bottomText">{props.bottomText}</p>
-            </div>
+            <MemeContent
+                    image={"data:image/jpeg;base64,"+imageData}
+                    memeContentRef={props.memeContentRef}
+                    bottomText={props.bottomText}
+                    topText={props.topText}
+            />
             <form onSubmit={handleSubmit}>
                 <label className="button" htmlFor="browsePhoto">Browse...</label>
                 <input type="file" name="image" className="button" id="browsePhoto" onChange={onChangeHandler}/>

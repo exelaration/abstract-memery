@@ -2,25 +2,31 @@ import React from 'react';
 
 export interface AppDispatchActions {
     type: string;
-    value: string;
+    value: any;
 }
 
 export interface AppState {
     topText: string;
     bottomText: string;
     memeName: string;
+    memeContentRef: React.RefObject<any>;
+    memeResultRef: React.RefObject<any>;
 }
 
 export const AppActions = {
     updateTopText: 'updateTopText',
     updateBottomText: 'updateBottomText',
-    updateMemeName: 'updateMemeName'
+    updateMemeName: 'updateMemeName',
+    updateMemeContentRef: 'updateMemeContent',
+    updateMemeResultRef: 'updateMemeResult'
 }
 
 export const initialState: AppState = {
     topText: '',
     bottomText: '',
-    memeName: ''
+    memeName: '',
+    memeContentRef: React.createRef<HTMLElement | null>(),
+    memeResultRef: React.createRef<HTMLElement | null>()
 }
 
 export function AppDispatchReducer(state: AppState, action: AppDispatchActions) {
@@ -31,6 +37,10 @@ export function AppDispatchReducer(state: AppState, action: AppDispatchActions) 
             return {...state, bottomText: action.value};
         case AppActions.updateMemeName:
             return {...state, memeName: action.value};
+        case AppActions.updateMemeContentRef:
+            return {...state, memeContentRef: action.value};
+        case AppActions.updateMemeResultRef:
+            return {...state, memeResultRef: action.value};
         default:
             return state;
     }
