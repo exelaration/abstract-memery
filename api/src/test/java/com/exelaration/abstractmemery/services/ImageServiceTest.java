@@ -64,38 +64,21 @@ public class ImageServiceTest {
         verify(fileStorageService).save(Mockito.eq("test-image.png"), Mockito.any());
     }
     @Test
-    public void imageServiceSave_WhenMetadataSaveUnsuccessful_ExpectError() throws IOException {
+    public void imageServiceSave_WhenMetadataSaveUnsuccessful_ExpectEmptyImage() throws IOException {
         MockMultipartFile mockMultipartFile = new MockMultipartFile("user-image", "test-image.png",
             "image/png", "test-image.png".getBytes());
         
-        Mockito.when(metadataService.save(null)).thenThrow(new IllegalArgumentException());
-        imageService.save(mockMultipartFile);
-        assertThrows(IllegalArgumentException.class, () -> metadataService.save(null));
+        Mockito.when(metadataService.save(Mockito.any())).thenThrow(new IllegalArgumentException());
+        Image actualImage = imageService.save(mockMultipartFile);
+        assertEquals(null, actualImage.getFileName());
     }
     @Test
-    public void imageServiceSave_WhenFileStorageSaveUnsuccessful_ExpectRuntimeException() throws IOException {
+    public void imageServiceSave_WhenFileStorageSaveUnsuccessful_ExpectEmptyImage() throws IOException {
         MockMultipartFile mockMultipartFile = new MockMultipartFile("user-image", "test-image.png",
             "image/png", "test-image.png".getBytes());
 
-        doThrow(new RuntimeException()).when(fileStorageService).save(null, null);
-        imageService.save(mockMultipartFile);
-        assertThrows(RuntimeException.class, () -> fileStorageService.save(null, null));
-    }
-    @Test
-    public void imageServiceSave_WhenFileStorageSaveUnsuccessful_ExpectIOException() throws IOException {
-        MockMultipartFile mockMultipartFile = new MockMultipartFile("user-image", "test-image.png",
-            "image/png", "test-image.png".getBytes());
-    
-        doThrow(new IOException()).when(fileStorageService).save(Mockito.eq("test-image.png"), Mockito.eq(null));
-        imageService.save(mockMultipartFile);
-        assertThrows(IOException.class, () -> fileStorageService.save(Mockito.eq("test-image.png"), null));
-    }
-    @Test
-    public void imageServiceSave_WhenInvalidFile_ExpectIOException() throws IOException {
-        MockMultipartFile mockMultipartFile = new MockMultipartFile("user-image", "test-image.png",
-            "image/png", "test-image.png".getBytes());
-        
-        doThrow(new Exception()).when(mockMultipartFile).getBytes();
-        assertThrows(Exception.class, () -> imageService.save(mockMultipartFile));
+        doThrow(new RuntimeException()).when(fileStorageService).save(Mockito.any(), Mockito.any());
+        Image actualImage = imageService.save(mockMultipartFile);
+        assertEquals(null, actualImage.getFileName());
     }
 }
