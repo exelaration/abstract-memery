@@ -58,4 +58,22 @@ public class ImageServiceTest {
         assertEquals(expectedImage.getFileName(), actualImage.getFileName());
         verify(fileStorageService).save(Mockito.eq("test-image.png"), Mockito.any());
     }
+    @Test
+    public void imageServiceSave_WhenMetadataSaveUnsuccessful_ExpectEmptyImage() throws IOException {
+        MockMultipartFile mockMultipartFile = new MockMultipartFile("user-image", "test-image.png",
+            "image/png", "test-image.png".getBytes());
+        
+        Mockito.when(metadataService.save(Mockito.any())).thenThrow(new IllegalArgumentException());
+        Image actualImage = imageService.save(mockMultipartFile);
+        assertEquals(null, actualImage.getFileName());
+    }
+    @Test
+    public void imageServiceSave_WhenFileStorageSaveUnsuccessful_ExpectEmptyImage() throws IOException {
+        MockMultipartFile mockMultipartFile = new MockMultipartFile("user-image", "test-image.png",
+            "image/png", "test-image.png".getBytes());
+
+        doThrow(new RuntimeException()).when(fileStorageService).save(Mockito.any(), Mockito.any());
+        Image actualImage = imageService.save(mockMultipartFile);
+        assertEquals(null, actualImage.getFileName());
+    }
 }

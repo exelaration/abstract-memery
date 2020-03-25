@@ -31,9 +31,13 @@ public class ImageServiceImpl implements ImageService {
     } catch (Exception e) {
       e.printStackTrace();
     }
+    try {
+      fileStorageService.save(fileName, file.getInputStream());
+      return metadataService.save(image);
 
-    fileStorageService.save(fileName, file.getInputStream());
-
-    return metadataService.save(image);
+    } catch (Exception e) {
+      Image nullImage = new Image();
+      return nullImage;
+    }
   }
 }
