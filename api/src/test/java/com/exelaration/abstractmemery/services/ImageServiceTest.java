@@ -1,13 +1,9 @@
 package com.exelaration.abstractmemery.services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.doNothing;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
-
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.Charset;
 
 import com.exelaration.abstractmemery.domains.Image;
 import com.exelaration.abstractmemery.services.implementations.ImageServiceImpl;
@@ -18,9 +14,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -57,7 +50,7 @@ public class ImageServiceTest {
   }
 
   @Test
-  public void imageServiceSave_WhenMetadataSaveUnsuccessful_ExpectEmptyImage() {
+  public void imageServiceSave_WhenMetadataSaveUnsuccessful_ExpectNull() {
     MockMultipartFile mockMultipartFile =
         new MockMultipartFile(
             "user-image", "test-image.png", "image/png", "test-image.png".getBytes());
@@ -67,7 +60,7 @@ public class ImageServiceTest {
   }
 
   @Test
-  public void imageServiceSave_WhenFileStorageSaveUnsuccessful_ExpectEmptyImage() {
+  public void imageServiceSave_WhenFileStorageSaveUnsuccessful_ExpectNull() {
     MockMultipartFile mockMultipartFile =
         new MockMultipartFile(
             "user-image", "test-image.png", "image/png", "test-image.png".getBytes());
