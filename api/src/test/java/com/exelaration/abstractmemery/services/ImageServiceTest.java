@@ -63,7 +63,7 @@ public class ImageServiceTest {
             "user-image", "test-image.png", "image/png", "test-image.png".getBytes());
 
     Mockito.when(metadataService.save(Mockito.any())).thenThrow(new IllegalArgumentException());
-    assertEquals(null, imageService.save(mockMultipartFile));
+    assertNull(imageService.save(mockMultipartFile));
   }
 
   @Test
@@ -73,6 +73,6 @@ public class ImageServiceTest {
             "user-image", "test-image.png", "image/png", "test-image.png".getBytes());
 
     doThrow(new RuntimeException()).when(fileStorageService).save(Mockito.any(), Mockito.any());
-    assertEquals(null, imageService.save(mockMultipartFile));
+    assertNull(imageService.save(mockMultipartFile));
   }
 }
