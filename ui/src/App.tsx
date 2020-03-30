@@ -1,48 +1,26 @@
-import React from 'react';
+import React, { useReducer } from 'react';
+import { AppDispatchContext, AppDispatchReducer, initialState } from './reducers/AppDispatchReducer';
 import './App.css';
 import TextUpload from './TextUpload';
 import ImageUpload from './ImageUpload';
 
-type Props = {
-}
+function App() {
+  const [appState, dispatch] = useReducer(AppDispatchReducer, initialState);
+  const value = {state: appState, dispatch};
 
-type State = {
-  topText: String,
-  bottomText: String,
-  memeName: String,
-}
-
-class App extends React.Component<Props, State> {
-  constructor(props: any) {
-    super(props);
-    this.state = {topText: '', bottomText: '', memeName: ''}
-  }
-
-  setTopText = (text: String) => {
-    this.setState({topText: text});
-  }
-
-  setBottomText = (text: String) => {
-    this.setState({bottomText: text});
-  }
-
-  setMemeName = (text: String) => {
-    this.setState({memeName: text})
-  }
-
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <h1 className="inputPrompt">Create Your Meme</h1>
-          <div className="memeCreation">
-            <ImageUpload topText={this.state.topText} bottomText={this.state.bottomText} sendMemeName={this.setMemeName.bind(this)}/>
-            <TextUpload sendTopText={this.setTopText.bind(this)} sendBottomText={this.setBottomText.bind(this)} memeName={this.state.memeName}/>
-          </div>
-        </header>
-      </div>
-    );
-  }
+  return (
+    <div className="App">
+      <header className="App-header">
+        <h1 className="inputPrompt">Create Your Meme</h1>
+        <div className="memeCreation">
+          <AppDispatchContext.Provider value={value}>
+            <ImageUpload topText={appState.topText} bottomText={appState.bottomText} />
+            <TextUpload memeName={appState.memeName} />
+          </AppDispatchContext.Provider>
+        </div>
+      </header>
+    </div>
+  );
 }
 
 export default App;

@@ -1,60 +1,57 @@
-import * as React from 'react';
+import React, { useContext, useState } from 'react';
 import axios from 'axios';
+import { AppDispatchContext, AppActions } from './reducers/AppDispatchReducer';
 import './ImageUpload.css';
 
 type ImageProps = {
-    topText: String,
-    bottomText: String,
-    sendMemeName: CallableFunction
-}
-
-type ImageState = {
-    imageData: String,
-    file: File | null
+    topText: string,
+    bottomText: string
 }
 
 interface ImageResponse {
-    fileData: String,
-    fileName: String
+    fileData: string,
+    fileName: string
 }
 
-class ImageUpload extends React.Component<ImageProps, ImageState> {
-    constructor(props: any) {
-        super(props);
-            this.state = { imageData: "", file: null};
-        }
+function ImageUpload(props: ImageProps) {
+    const {dispatch} = useContext(AppDispatchContext);
 
-    handleSubmit = (e: any) => {
+    const [imageData, setImageData] = useState('');
+    const [file, setFile] = useState<File | null>(null);
+
+    function handleSubmit(e: any) {
         e.preventDefault();
-        if (this.state.file != null) {
+        if (file != null) {
             const formData = new FormData();
-            formData.append('file',this.state.file);
+            formData.append('file', file);
             axios.post<ImageResponse>('http://localhost:8080/upload/', formData)
                 .then((response) => {
-                    this.setState({imageData: response.data.fileData});
-                }).catch((error) => {
-                    console.log(error)});
+                    setImageData(response.data.fileData);
+                })
+                .catch((error) => {
+                    console.log(error)
+                });
         }
-      }
-      onChangeHandler = (e: any) => {
-        this.setState({file: e.target.files[0]});
-        this.props.sendMemeName(e.target.files[0].name)
     }
-    render() {
-        return (
-            <div className='upload'>
-                <div id="textWrapping">
-                    <img id="image" src={"data:image/jpeg;base64," + this.state.imageData} alt=""></img>
-                    <p className='textFormatting' id="topText">{this.props.topText}</p>
-                    <p className='textFormatting' id="bottomText">{this.props.bottomText}</p>
-                </div>
-                <form onSubmit={this.handleSubmit}>
-                    <label className="button" htmlFor="browsePhoto">Browse...</label>
-                    <input type="file" name="image" className="button" id="browsePhoto" onChange={this.onChangeHandler}/>
-                    <button className="button" type="submit">Upload Image</button>
-                </form>
+      
+    function onChangeHandler(e: any) {
+        setFile(e.target.files[0]);
+        dispatch({type: AppActions.updateMemeName, value: e.target.files[0].name});
+    }
+
+    return (
+        <div className='upload'>
+            <div id="textWrapping">
+                <img id="image" src={"data:image/jpeg;base64," + imageData} alt=""></img>
+                <p className='textFormatting' id="topText">{props.topText}</p>
+                <p className='textFormatting' id="bottomText">{props.bottomText}</p>
             </div>
-        );
-      }
+            <form onSubmit={handleSubmit}>
+                <label className="button" htmlFor="browsePhoto">Browse...</label>
+                <input type="file" name="image" className="button" id="browsePhoto" onChange={onChangeHandler}/>
+                <button className="button" type="submit">Upload Image</button>
+            </form>
+        </div>
+    );
 }
 export default ImageUpload;
