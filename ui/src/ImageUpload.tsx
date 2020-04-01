@@ -12,7 +12,8 @@ type ImageProps = {
 
 interface ImageResponse {
     fileData: string,
-    fileName: string
+    fileName: string,
+    id: number
 }
 
 function ImageUpload(props: ImageProps) {
@@ -28,6 +29,7 @@ function ImageUpload(props: ImageProps) {
             formData.append('file', file);
             axios.post<ImageResponse>('http://localhost:8080/upload/', formData)
                 .then((response) => {
+                    dispatch({type: AppActions.updateImageID, value: response.data.id});
                     setImageData(response.data.fileData);
                 })
                 .catch((error) => {

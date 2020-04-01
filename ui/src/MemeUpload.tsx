@@ -7,6 +7,7 @@ import domtoimage from 'dom-to-image-more';
 
 type MemeProps = {
     memeName: String,
+    imageID: number,
     memeContentRef: React.RefObject<any>
     memeResultRef: React.RefObject<any>
 }
@@ -47,6 +48,7 @@ function MemeUpload(props: MemeProps) {
                     topText: topText, 
                     bottomText: bottomText,
                     memeName: timestamp,
+                    imageId: props.imageID,
                     memeUrl: dataUrl
                 })).then(res => {
                     console.log(res);

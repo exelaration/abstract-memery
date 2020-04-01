@@ -15,7 +15,7 @@ function App() {
         <div className="memeCreation">
           <AppDispatchContext.Provider value={value}>
             <ImageUpload topText={appState.topText} bottomText={appState.bottomText} memeContentRef={appState.memeContentRef}/>
-            <MemeUpload memeName={appState.memeName} memeContentRef={appState.memeContentRef} memeResultRef={appState.memeResultRef}/>
+            <MemeUpload memeName={appState.memeName} imageID={appState.imageID} memeContentRef={appState.memeContentRef} memeResultRef={appState.memeResultRef}/>
           </AppDispatchContext.Provider>
         </div>
       </header>
