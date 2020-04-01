@@ -17,8 +17,4 @@ public class Tag {
   private int id;
 
   private String tag;
-
-  // @ManyToOne
-  // @JoinColumn (name = "meme_id")
-  // private Meme meme;
 }

@@ -1,10 +1,12 @@
 package com.exelaration.abstractmemery.domains;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import lombok.Data;
 
 @Data
@@ -18,13 +20,12 @@ public class Meme {
 
   private String memeName;
 
+  @Transient private String memeUrl;
+
   private String topText;
 
   private String bottomText;
 
-  // @OneToMany (mappedBy = "meme")
-  // private List<Image> images;
-
-  // @OneToMany (mappedBy = "meme")
-  // private List<Tag> tags;
+  @Column(name = "image_id")
+  private int imageId;
 }

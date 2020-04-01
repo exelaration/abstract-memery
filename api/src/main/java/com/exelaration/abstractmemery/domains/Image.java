@@ -20,8 +20,4 @@ public class Image {
   @Transient private String fileData;
 
   private String fileName;
-
-  // @ManyToOne
-  // @JoinColumn (name = "meme_id")
-  // private Meme meme;
 }
