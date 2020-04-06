@@ -44,6 +44,7 @@ dependencies {
 	testCompile('org.junit.jupiter:junit-jupiter-engine:5.2.0')
 	testCompile('org.mockito:mockito-junit-jupiter:2.23.0')
 	testRuntime('org.flywaydb:flyway-core:6.2.3')
+	compile("com.auth0:java-jwt:3.4.0")
 }
 
 
