@@ -3,32 +3,34 @@ package com.exelaration.abstractmemery.services.implementations;
 import com.exelaration.abstractmemery.services.FileStorageService;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Base64;
 import org.springframework.stereotype.Service;
 
 @Service("fileStorageService")
 public class FileStorageServiceImpl implements FileStorageService {
-  private static final String uploadingDir = "/app/src/main/resources/images/";
 
-  public void save(String fileName, InputStream fileStream) {
+  public void save(String fileName, String urlData, String storageLocation) {
+    String uploadingDir = "/app/src/main/resources/" + storageLocation;
+    createDirectory(uploadingDir);
     String fileLocation = "";
-    createDirectory();
     if (fileName.equals("")) {
       throw new RuntimeException("You must select the a file for uploading");
     }
     try {
       fileLocation = (uploadingDir + fileName);
       Path path = Paths.get(fileLocation);
-      Files.write(path, fileStream.readAllBytes());
+      byte[] decodedBytes = Base64.getDecoder().decode(urlData);
+      Files.write(path, decodedBytes);
+
     } catch (IOException e) {
       e.printStackTrace();
     }
   }
 
-  private void createDirectory() {
-    new File(uploadingDir).mkdirs();
+  private void createDirectory(String uploadDirectory) {
+    new File(uploadDirectory).mkdirs();
   }
 }

@@ -19,9 +19,10 @@ public class ImageServiceImpl implements ImageService {
   public Image save(MultipartFile file) {
     Image image = new Image();
     String fileName = "";
+    String fileData = "";
     try {
       byte[] bytes = file.getBytes();
-      String fileData = Base64.encodeBase64String(bytes);
+      fileData = Base64.encodeBase64String(bytes);
       fileName = file.getOriginalFilename();
 
       image.setFileData(fileData);
@@ -31,7 +32,7 @@ public class ImageServiceImpl implements ImageService {
       e.printStackTrace();
     }
     try {
-      fileStorageService.save(fileName, file.getInputStream());
+      fileStorageService.save(fileName, fileData, "images/");
       return metadataService.save(image);
 
     } catch (Exception e) {

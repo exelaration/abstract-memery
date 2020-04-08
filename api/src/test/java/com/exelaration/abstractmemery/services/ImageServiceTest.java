@@ -46,7 +46,8 @@ public class ImageServiceTest {
     Image actualImage = imageService.save(mockMultipartFile);
 
     assertEquals(expectedImage.getFileName(), actualImage.getFileName());
-    verify(fileStorageService).save(Mockito.eq("test-image.png"), Mockito.any());
+    verify(fileStorageService)
+        .save(Mockito.eq("test-image.png"), Mockito.any(), Mockito.eq("images/"));
   }
 
   @Test
@@ -65,7 +66,9 @@ public class ImageServiceTest {
         new MockMultipartFile(
             "user-image", "test-image.png", "image/png", "test-image.png".getBytes());
 
-    doThrow(new RuntimeException()).when(fileStorageService).save(Mockito.any(), Mockito.any());
+    doThrow(new RuntimeException())
+        .when(fileStorageService)
+        .save(Mockito.any(), Mockito.any(), Mockito.any());
     assertNull(imageService.save(mockMultipartFile));
   }
 }
