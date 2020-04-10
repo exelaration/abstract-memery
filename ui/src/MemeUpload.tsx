@@ -1,5 +1,9 @@
 import React, { useContext, useState } from 'react';
 import axios from 'axios';
+import InputGroup from 'react-bootstrap/InputGroup';
+import Form from 'react-bootstrap/Form';
+import FormControl from 'react-bootstrap/FormControl';
+import Button from 'react-bootstrap/Button';
 import { AppActions, AppDispatchContext } from './reducers/AppDispatchReducer';
 import './MemeUpload.css';
 import MemeResult from './MemeResult';
@@ -60,26 +64,35 @@ function MemeUpload(props: MemeProps) {
     return (
         <div>
             <MemeResult memeResultRef={props.memeResultRef} />
-            <form onSubmit={formSubmitHandler}>
-                <p className='inputPrompt'>Enter your top text caption:</p>
-                <input 
-                    type='text'
-                    name='topText'
-                    placeholder="Top Text..."
-                    onChange={topTextChangeHandler} />
-                <p className="inputPrompt">Enter your bottom text caption:</p>
-                <input 
-                    type='text'
-                    name='bottomText'
-                    placeholder="Bottom Text..."
-                    onChange={bottomTextChangeHandler} />
+            <Form onSubmit={formSubmitHandler}>
+                <InputGroup>
+                    <InputGroup.Prepend>
+                        <InputGroup.Text>Top Text</InputGroup.Text>
+                    </InputGroup.Prepend>
+                    <FormControl 
+                        type='text'
+                        name='topText'
+                        placeholder="Top Text..."
+                        onChange={topTextChangeHandler}
+                    />
+                </InputGroup>
+                <br/>
+                <InputGroup>
+                    <InputGroup.Prepend>
+                        <InputGroup.Text>Bottom Text</InputGroup.Text>
+                    </InputGroup.Prepend>
+                    <FormControl 
+                        type='text'
+                        name='bottomText'
+                        placeholder="Bottom Text..."
+                        onChange={bottomTextChangeHandler}
+                    />
+                </InputGroup>
                 <br/>
                 {errorMessage}
                 <br/>
-                <input className="button"
-                    type='submit'
-                />
-            </form>
+                <Button type='submit' variant='primary'>Create Meme</Button>
+            </Form>
         </div>
     );
 }

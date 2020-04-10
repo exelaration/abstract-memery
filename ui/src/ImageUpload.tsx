@@ -1,6 +1,9 @@
 import React, { useContext, useState } from 'react';
 import axios from 'axios';
 import { AppDispatchContext, AppActions } from './reducers/AppDispatchReducer';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import InputGroup from 'react-bootstrap/InputGroup';
 import './ImageUpload.css';
 import MemeContent from './MemeContent';
 
@@ -52,11 +55,20 @@ function ImageUpload(props: ImageProps) {
                     bottomText={props.bottomText}
                     topText={props.topText}
             />
-            <form onSubmit={handleSubmit}>
-                <label className="button" htmlFor="browsePhoto">Browse...</label>
-                <input type="file" name="image" className="button" id="browsePhoto" onChange={onChangeHandler}/>
-                <button className="button" type="submit">Upload Image</button>
-            </form>
+            <Form onSubmit={handleSubmit}>
+                <InputGroup>
+                    <Form.File 
+                        id="custom-file"
+                        label="Choose file"
+                        onChange={onChangeHandler}
+                        name="image"
+                        custom
+                    />
+                    <InputGroup.Append>
+                        <Button type='submit' variant='primary' size='lg'>Upload</Button>
+                    </InputGroup.Append>
+                </InputGroup>
+            </Form>
         </div>
     );
 }
