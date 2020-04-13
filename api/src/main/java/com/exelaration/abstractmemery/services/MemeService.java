@@ -7,4 +7,6 @@ import javax.transaction.Transactional;
 public interface MemeService {
 
   public Meme save(Meme meme);
+
+  public String getMeme(int id);
 }

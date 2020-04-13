@@ -9,6 +9,7 @@ export interface AppState {
   topText: string;
   bottomText: string;
   memeName: string;
+  dataUrl: string;
   imageID: number;
   memeContentRef: React.RefObject<any>;
   memeResultRef: React.RefObject<any>;
@@ -18,6 +19,7 @@ export const AppActions = {
   updateTopText: "updateTopText",
   updateBottomText: "updateBottomText",
   updateMemeName: "updateMemeName",
+  updateDataUrl: "updateDataUrl",
   updateImageID: "updateImageID",
   updateMemeContentRef: "updateMemeContent",
   updateMemeResultRef: "updateMemeResult",
@@ -27,6 +29,7 @@ export const initialState: AppState = {
   topText: "",
   bottomText: "",
   memeName: "",
+  dataUrl: "",
   imageID: 0,
   memeContentRef: React.createRef<HTMLElement | null>(),
   memeResultRef: React.createRef<HTMLElement | null>(),
@@ -43,6 +46,8 @@ export function AppDispatchReducer(
       return { ...state, bottomText: action.value };
     case AppActions.updateMemeName:
       return { ...state, memeName: action.value };
+    case AppActions.updateDataUrl:
+      return {...state, dataUrl: action.value};
     case AppActions.updateImageID:
       return { ...state, imageID: action.value };
     case AppActions.updateMemeContentRef:
