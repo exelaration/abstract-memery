@@ -43,15 +43,23 @@ function ImageUpload(props: ImageProps) {
   }
 
   function onChangeHandler(e: any) {
-    setFile(e.target.files[0]);
-    dispatch({
-      type: AppActions.updateMemeName,
-      value: e.target.files[0].name,
-    });
-    dispatch({
-      type: AppActions.updateMemeContentRef,
-      value: props.memeContentRef,
-    });
+    if (isImage(e.target.files[0])) {
+      setFile(e.target.files[0]);
+      dispatch({
+        type: AppActions.updateMemeName,
+        value: e.target.files[0].name,
+      });
+      dispatch({
+        type: AppActions.updateMemeContentRef,
+        value: props.memeContentRef,
+      });
+    } else {
+      alert("Please upload an image file");
+    }
+  }
+
+  function isImage(file: File) {
+    return file["type"].split("/")[0] === "image"; //returns true or false
   }
 
   return (
@@ -69,6 +77,7 @@ function ImageUpload(props: ImageProps) {
             label="Choose file"
             onChange={onChangeHandler}
             name="image"
+            accept="image/*"
             custom
           />
           <InputGroup.Append>
