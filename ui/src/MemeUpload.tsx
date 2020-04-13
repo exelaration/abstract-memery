@@ -8,6 +8,7 @@ import { AppActions, AppDispatchContext } from "./reducers/AppDispatchReducer";
 import "./MemeUpload.css";
 import MemeResult from "./MemeResult";
 import domtoimage from "dom-to-image-more";
+import {useHistory} from "react-router-dom";
 
 type MemeProps = {
   memeName: String;
@@ -16,11 +17,22 @@ type MemeProps = {
   memeResultRef: React.RefObject<any>;
 };
 
+interface MemeResponse {
+  id: number,
+  memeName: string,
+  memeUrl: string,
+  topText: string,
+  bottomText: string,
+  imageId: number
+}
+
 function MemeUpload(props: MemeProps) {
   const { dispatch } = useContext(AppDispatchContext);
   const [topText, setTopText] = useState("");
   const [bottomText, setBottomText] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+
+  const history = useHistory();
 
   function generateMeme() {
     return domtoimage.toPng(props.memeContentRef.current);
@@ -48,7 +60,7 @@ function MemeUpload(props: MemeProps) {
       generateMeme().then((dataUrl: string) => {
         let timestamp = Date.now();
         axios
-          .post("http://localhost:8080/meme/", {
+          .post<MemeResponse>("http://localhost:8080/meme/", {
             topText: topText,
             bottomText: bottomText,
             memeName: timestamp,
@@ -56,7 +68,7 @@ function MemeUpload(props: MemeProps) {
             memeUrl: dataUrl,
           })
           .then((res) => {
-            console.log(res);
+            history.push(`/memes/${res.data.id}`);
           });
       });
     }

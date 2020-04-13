@@ -4,7 +4,6 @@ import static org.mockito.Mockito.when;
 
 import com.exelaration.abstractmemery.domains.Image;
 import com.exelaration.abstractmemery.services.implementations.ImageServiceImpl;
-import java.io.File;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -38,8 +37,6 @@ public class UploadControllerTest {
     ResultMatcher ok = MockMvcResultMatchers.status().isOk();
     String url = "/upload/";
     String fileName = "test.jpg";
-    File file = new File(fileName);
-    file.delete();
     MockMultipartFile imageFile =
         new MockMultipartFile("file", fileName, "image/jpeg", "test image content".getBytes());
     Image testImage = new Image();

@@ -11,16 +11,17 @@ import org.springframework.stereotype.Service;
 
 @Service("fileStorageService")
 public class FileStorageServiceImpl implements FileStorageService {
+  private String uploadingDir = "/app/src/main/resources/";
 
   public void save(String fileName, String urlData, String storageLocation) {
-    String uploadingDir = "/app/src/main/resources/" + storageLocation;
-    createDirectory(uploadingDir);
+    String uploadLocation = uploadingDir + storageLocation;
+    createDirectory(uploadLocation);
     String fileLocation = "";
     if (fileName.equals("")) {
       throw new RuntimeException("You must select the a file for uploading");
     }
     try {
-      fileLocation = (uploadingDir + fileName);
+      fileLocation = (uploadLocation + fileName);
       Path path = Paths.get(fileLocation);
       byte[] decodedBytes = Base64.getDecoder().decode(urlData);
       Files.write(path, decodedBytes);
@@ -28,6 +29,24 @@ public class FileStorageServiceImpl implements FileStorageService {
     } catch (IOException e) {
       e.printStackTrace();
     }
+  }
+
+  public String getFileData(String fileName) {
+    String fileLocation = uploadingDir + "memes/";
+    File file = new File(fileLocation + fileName);
+    String fileData = "";
+    if (file.exists()) {
+      Path filePath = Paths.get(fileLocation + fileName);
+      byte[] fileBytes;
+      try {
+        fileBytes = Files.readAllBytes(filePath);
+        fileData = Base64.getEncoder().encodeToString(fileBytes);
+      } catch (IOException e) {
+        System.out.println("Image not found!");
+        return null;
+      }
+    }
+    return fileData;
   }
 
   private void createDirectory(String uploadDirectory) {
