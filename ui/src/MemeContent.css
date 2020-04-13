@@ -1,49 +1,43 @@
 #textWrapping {
-    position:relative; 
-    height: 100%;
+  position: relative;
+  height: 100%;
 }
 
 * {
-    box-sizing: border-box;
-  }
-  
+  box-sizing: border-box;
+}
+
 #image {
-margin: auto;
-width: 700px;
-height: 450px;
-background-size: 100%; 
-text-align: center;
-position: relative;
-background: url(./placeholder.png) no-repeat scroll 0 0;
-background-size: 700px 450px;
+  margin: auto;
+  width: 700px;
+  height: 450px;
+  background-size: 100%;
+  text-align: center;
+  position: relative;
+  background: url(./placeholder.png) no-repeat scroll 0 0;
+  background-size: 700px 450px;
 }
 
 .textFormatting {
-position: absolute; 
-left: 0;
-right: 0; 
-margin: 15px 0;
-padding: 0 5px;
-font-family: impact;
-font-size: 2em;
-text-transform: uppercase;
-color: white;
-letter-spacing: 1px;
-text-shadow:2px 2px 0 #000,
--2px -2px 0 #000,
-2px -2px 0 #000,
--2px 2px 0 #000,
-0px 2px 0 #000,
-2px 0px 0 #000,
-0px -2px 0 #000,
--2px 0px 0 #000,
-2px 2px 5px #000;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: 15px 0;
+  padding: 0 5px;
+  font-family: impact;
+  font-size: 2em;
+  text-transform: uppercase;
+  color: white;
+  letter-spacing: 1px;
+  text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000,
+    -2px 2px 0 #000, 0px 2px 0 #000, 2px 0px 0 #000, 0px -2px 0 #000,
+    -2px 0px 0 #000, 2px 2px 5px #000;
 }
 
 #bottomText {
-    bottom: 0;
+  bottom: 0;
 }
 
 #topText {
-    top: 0;
+  top: 0;
 }
