@@ -14,5 +14,5 @@ public interface MemeMetadataService {
 
   public void deleteById(Integer id);
 
-  public ArrayList<String> getMemes();
+  public ArrayList<Meme> getMemes();
 }

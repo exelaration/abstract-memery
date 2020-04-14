@@ -29,7 +29,7 @@ public class MemeMetadataServiceImpl implements MemeMetadataService {
     memeRepository.deleteById(id);
   }
 
-  public ArrayList<String> getMemes() {
-    return memeRepository.getMemes();
+  public ArrayList<Meme> getMemes() {
+    return memeRepository.findTop10ByOrderByIdDesc();
   }
 }
