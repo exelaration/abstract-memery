@@ -31,7 +31,7 @@ public class MemeController {
   }
 
   @GetMapping()
-  public ArrayList<String> getMemesForGallery() {
+  public ArrayList<Meme> getMemesForGallery() {
     return memeService.getMemes();
   }
 }

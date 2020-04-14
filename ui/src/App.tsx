@@ -15,7 +15,7 @@ function App() {
         <Route path="/" component={Gallery} exact />
         <Route path="/sign-up" component={SignUp} exact />
         <Route path="/login" component={Login} exact />
-        <Route path="/memes/:imageID" component={MemePage} exact />
+        <Route path="/memes/:memeID" component={MemePage} exact />
         <Route path="/create-meme" component={CreateMeme} exact />
         <Route component={RouterError} />
       </Switch>

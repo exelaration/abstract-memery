@@ -9,7 +9,7 @@ function MemePage(props: any) {
   useEffect(() => {
     function getMeme() {
       const response = axios
-        .get("http://localhost:8080/meme/?id=" + props.match.params.imageID)
+        .get("http://localhost:8080/meme/?id=" + props.match.params.memeID)
         .then((res) => {
           setImageData(res.data);
           setDisplayMessage("Share Your Meme");
@@ -20,7 +20,7 @@ function MemePage(props: any) {
       return response;
     }
     getMeme();
-  }, [props.match.params.imageID]);
+  }, [props.match.params.memeID]);
 
   return (
     <div className="memepage">

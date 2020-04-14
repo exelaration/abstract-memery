@@ -110,17 +110,19 @@ public class MemeControllerTest {
   public void getMemesForGallery_WhenMemeExists_ExpectStatus200andJSONreturn() throws Exception {
     ResultMatcher ok = MockMvcResultMatchers.status().isOk();
     String url = "/meme";
-    ArrayList<String> expectedMemeData = new ArrayList<String>();
-    expectedMemeData.add("TestMemeData");
+    ArrayList<Meme> expectedMemes = new ArrayList<Meme>();
+    Meme testMeme = new Meme();
+    testMeme.setMemeName("testMeme");
+    expectedMemes.add(testMeme);
 
-    when(memeService.getMemes()).thenReturn(expectedMemeData);
+    when(memeService.getMemes()).thenReturn(expectedMemes);
 
     mockMvc
         .perform(MockMvcRequestBuilders.get(url))
         .andExpect(ok)
         .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(jsonPath("$", hasSize(1)))
-        .andExpect(jsonPath("$[0]", is("TestMemeData")));
+        .andExpect(jsonPath("$[0].memeName", is("testMeme")));
   }
 
   @Test

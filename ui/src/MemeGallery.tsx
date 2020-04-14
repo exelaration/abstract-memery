@@ -4,23 +4,28 @@ import "./MemeGallery.css";
 import Button from "react-bootstrap/Button";
 
 function MemeGallery(props: any) {
-  const [memeURLs, setMemeURLs] = useState([]);
+  const [memeResponses, setMemeResponses] = useState([]);
 
   useEffect(() => {
     function getMemeURLs() {
       axios.get("http://localhost:8080/meme").then((response) => {
-        const memeURLs = response.data;
-        setMemeURLs(memeURLs);
+        const memeResponses = response.data;
+        setMemeResponses(memeResponses);
       });
     }
     getMemeURLs();
   }, [props.match.params.id]);
 
-  const memes = memeURLs.map(function (meme) {
+  const memes = memeResponses.map(function (meme) {
     return (
-      <div key={meme}>
+      <div key={meme["id"]}>
         {" "}
-        <img src={"data:image/jpeg;base64," + meme} alt="Meme Not Found" />{" "}
+        <a href={"/memes/" + meme["id"]}>
+          <img
+            src={"data:image/jpeg;base64," + meme["memeUrl"]}
+            alt="Meme Not Found"
+          />
+        </a>{" "}
       </div>
     );
   });

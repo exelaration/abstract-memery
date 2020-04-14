@@ -3,6 +3,7 @@ package com.exelaration.abstractmemery.services;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
+import com.exelaration.abstractmemery.domains.Meme;
 import com.exelaration.abstractmemery.repositories.MemeRepository;
 import com.exelaration.abstractmemery.services.implementations.MemeMetadataServiceImpl;
 import java.util.ArrayList;
@@ -24,18 +25,21 @@ public class MemeMetadataServiceTest {
 
   @Test
   public void getMemes_WhenReturnsNull_expectEmptyArray() {
-    Mockito.when(memeRepository.getMemes()).thenReturn(null);
+    Mockito.when(memeRepository.findTop10ByOrderByIdDesc()).thenReturn(null);
 
     assertNull(memeMetadataService.getMemes());
   }
 
   @Test
   public void getMemes_WhenReturnsSuccessfully_expectArray() {
-    ArrayList<String> memeNames = new ArrayList<String>();
-    memeNames.add("testMemeName");
+    ArrayList<Meme> expectedMemes = new ArrayList<Meme>();
+    Meme testMeme = new Meme();
+    testMeme.setMemeName("testMeme");
+    expectedMemes.add(testMeme);
 
-    Mockito.when(memeRepository.getMemes()).thenReturn(memeNames);
+    Mockito.when(memeRepository.findTop10ByOrderByIdDesc()).thenReturn(expectedMemes);
 
-    assertEquals(memeNames, memeMetadataService.getMemes());
+    assertEquals(
+        expectedMemes.get(0).getMemeName(), memeMetadataService.getMemes().get(0).getMemeName());
   }
 }
