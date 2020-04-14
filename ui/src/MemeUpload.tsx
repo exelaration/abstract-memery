@@ -8,7 +8,7 @@ import { AppActions, AppDispatchContext } from "./reducers/AppDispatchReducer";
 import "./MemeUpload.css";
 import MemeResult from "./MemeResult";
 import domtoimage from "dom-to-image-more";
-import {useHistory} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 type MemeProps = {
   memeName: String;
@@ -18,12 +18,12 @@ type MemeProps = {
 };
 
 interface MemeResponse {
-  id: number,
-  memeName: string,
-  memeUrl: string,
-  topText: string,
-  bottomText: string,
-  imageId: number
+  id: number;
+  memeName: string;
+  memeUrl: string;
+  topText: string;
+  bottomText: string;
+  imageId: number;
 }
 
 function MemeUpload(props: MemeProps) {

@@ -47,7 +47,7 @@ export function AppDispatchReducer(
     case AppActions.updateMemeName:
       return { ...state, memeName: action.value };
     case AppActions.updateDataUrl:
-      return {...state, dataUrl: action.value};
+      return { ...state, dataUrl: action.value };
     case AppActions.updateImageID:
       return { ...state, imageID: action.value };
     case AppActions.updateMemeContentRef:

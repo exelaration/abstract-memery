@@ -3,6 +3,7 @@ package com.exelaration.abstractmemery.services.implementations;
 import com.exelaration.abstractmemery.domains.Meme;
 import com.exelaration.abstractmemery.repositories.MemeRepository;
 import com.exelaration.abstractmemery.services.MemeMetadataService;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,5 +27,9 @@ public class MemeMetadataServiceImpl implements MemeMetadataService {
 
   public void deleteById(Integer id) {
     memeRepository.deleteById(id);
+  }
+
+  public ArrayList<String> getMemes() {
+    return memeRepository.getMemes();
   }
 }

@@ -1,8 +1,8 @@
-.memepage {
+.gallery {
   text-align: center;
 }
 
-.memepageHeader {
+.gallery-header {
   background-color: #282c34;
   min-height: 100vh;
   display: flex;

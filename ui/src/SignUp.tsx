@@ -53,7 +53,7 @@ function SignUp() {
   return (
     <div className="signup">
       <header className="signupHeader">
-        <Button href="/" variant="primary">
+        <Button href="/create-meme" variant="primary">
           Return to Meme Creation
         </Button>
         <h1>Sign Up for an Abstract Memery Account</h1>

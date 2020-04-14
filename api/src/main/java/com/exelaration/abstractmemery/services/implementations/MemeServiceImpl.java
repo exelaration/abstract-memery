@@ -4,6 +4,7 @@ import com.exelaration.abstractmemery.domains.Meme;
 import com.exelaration.abstractmemery.services.FileStorageService;
 import com.exelaration.abstractmemery.services.MemeMetadataService;
 import com.exelaration.abstractmemery.services.MemeService;
+import java.util.ArrayList;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -43,5 +44,22 @@ public class MemeServiceImpl implements MemeService {
       return null;
     }
     return memeData;
+  }
+
+  public ArrayList<String> getMemes() {
+    ArrayList<String> memeNames = memeMetadataService.getMemes();
+    if (memeNames == null) {
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Images Do Not Exist");
+    }
+    ArrayList<String> memeURLs = new ArrayList<String>();
+    for (String memeName : memeNames) {
+      try {
+        String meme = fileStorageService.getFileData(memeName);
+        memeURLs.add(meme);
+      } catch (Exception e) {
+        return null;
+      }
+    }
+    return memeURLs;
   }
 }

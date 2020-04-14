@@ -32,7 +32,7 @@ public class ImageServiceTest {
   }
 
   @Test
-  public void imageServiceSave_WhenImageSavedSuccessfully_ExpectImageReturned() {
+  public void save_WhenImageSavedSuccessfully_ExpectImageReturned() {
     MockMultipartFile mockMultipartFile =
         new MockMultipartFile(
             "user-image", "test-image.png", "image/png", "test-image.png".getBytes());
@@ -51,7 +51,7 @@ public class ImageServiceTest {
   }
 
   @Test
-  public void imageServiceSave_WhenMetadataSaveUnsuccessful_ExpectNull() {
+  public void save_WhenMetadataSaveUnsuccessful_ExpectNull() {
     MockMultipartFile mockMultipartFile =
         new MockMultipartFile(
             "user-image", "test-image.png", "image/png", "test-image.png".getBytes());
@@ -61,7 +61,7 @@ public class ImageServiceTest {
   }
 
   @Test
-  public void imageServiceSave_WhenFileStorageSaveUnsuccessful_ExpectNull() {
+  public void save_WhenFileStorageSaveUnsuccessful_ExpectNull() {
     MockMultipartFile mockMultipartFile =
         new MockMultipartFile(
             "user-image", "test-image.png", "image/png", "test-image.png".getBytes());
