@@ -39,7 +39,7 @@ function Login() {
   return (
     <div className="signup">
       <header className="signupHeader">
-        <Button href="/" variant="primary">
+        <Button href="/create-meme" variant="primary">
           Return to Meme Creation
         </Button>
         <h1>Login</h1>

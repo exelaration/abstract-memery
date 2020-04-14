@@ -1,6 +1,7 @@
 package com.exelaration.abstractmemery.services;
 
 import com.exelaration.abstractmemery.domains.Meme;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,4 +13,6 @@ public interface MemeMetadataService {
   public Meme save(Meme meme);
 
   public void deleteById(Integer id);
+
+  public ArrayList<String> getMemes();
 }

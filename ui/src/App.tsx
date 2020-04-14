@@ -6,15 +6,17 @@ import CreateMeme from "./CreateMeme";
 import MemePage from "./MemePage";
 import Login from "./Login";
 import SignUp from "./SignUp";
+import Gallery from "./MemeGallery";
 
 function App() {
   return (
     <Router>
       <Switch>
-        <Route path="/" component={CreateMeme} exact />
+        <Route path="/" component={Gallery} exact />
         <Route path="/sign-up" component={SignUp} exact />
         <Route path="/login" component={Login} exact />
-        <Route path = "/memes/:imageID" component={MemePage} exact />
+        <Route path="/memes/:imageID" component={MemePage} exact />
+        <Route path="/create-meme" component={CreateMeme} exact />
         <Route component={RouterError} />
       </Switch>
     </Router>

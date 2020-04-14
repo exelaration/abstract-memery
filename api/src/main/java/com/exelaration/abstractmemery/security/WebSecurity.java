@@ -1,5 +1,6 @@
 package com.exelaration.abstractmemery.security;
 
+import static com.exelaration.abstractmemery.constants.SecurityConstants.GALLERY_URL;
 import static com.exelaration.abstractmemery.constants.SecurityConstants.SIGN_UP_URL;
 
 import com.exelaration.abstractmemery.filters.JWTAuthenticationFilter;
@@ -36,6 +37,10 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         .and()
         .csrf()
         .disable()
+        .authorizeRequests()
+        .antMatchers(HttpMethod.GET, GALLERY_URL)
+        .permitAll()
+        .and()
         .authorizeRequests()
         .antMatchers(HttpMethod.POST, SIGN_UP_URL)
         .permitAll()

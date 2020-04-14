@@ -2,6 +2,7 @@ package com.exelaration.abstractmemery.controllers;
 
 import com.exelaration.abstractmemery.domains.Meme;
 import com.exelaration.abstractmemery.services.MemeService;
+import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,5 +28,10 @@ public class MemeController {
   @GetMapping("/")
   public String getMeme(@RequestParam int id) throws Exception {
     return memeService.getMeme(id);
+  }
+
+  @GetMapping()
+  public ArrayList<String> getMemesForGallery() {
+    return memeService.getMemes();
   }
 }

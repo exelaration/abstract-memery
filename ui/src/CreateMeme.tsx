@@ -17,6 +17,9 @@ function CreateMeme() {
     <div className="Create">
       <header className="Create-header">
         <div className="row">
+          <Button type="submit" href="/" variant="primary">
+            Gallery
+          </Button>
           <Button type="submit" href="/sign-up" variant="primary">
             Sign Up
           </Button>

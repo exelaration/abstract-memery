@@ -34,7 +34,7 @@ public class UserDetailsServiceTest {
   }
 
   @Test
-  public void UserDetailsSaveUser_WhenUserSavesSuccessfully_ExpectUser() {
+  public void saveUser_WhenUserSavesSuccessfully_ExpectUser() {
     ApplicationUser expectedUser = new ApplicationUser();
     expectedUser.setUsername("admin");
     expectedUser.setPassword("password");
@@ -47,7 +47,7 @@ public class UserDetailsServiceTest {
   }
 
   @Test
-  public void UserDetailsSaveUser_WhenUserSaveUnsuccessful_ExpectNull() {
+  public void saveUser_WhenUserSaveUnsuccessful_ExpectNull() {
     ApplicationUser user = new ApplicationUser();
     Mockito.when(userRepository.save(Mockito.any())).thenThrow(new IllegalArgumentException());
     assertNull(userDetailsService.saveUser(user));
@@ -55,7 +55,7 @@ public class UserDetailsServiceTest {
   }
 
   @Test
-  public void UserDetailsLoadUserByUsername_WhenGivenValidUsername_ExpectUser() {
+  public void loadUserByUsername_WhenGivenValidUsername_ExpectUser() {
     ApplicationUser expectedUser = new ApplicationUser();
     expectedUser.setUsername("admin");
     expectedUser.setPassword("password");
@@ -66,7 +66,7 @@ public class UserDetailsServiceTest {
   }
 
   @Test
-  public void UserDetailsLoadUserByUsername_WhenUserNotFound_ExpectUserNotFoundException() {
+  public void loadUserByUsername_WhenUserNotFound_ExpectUserNotFoundException() {
     Mockito.when(userRepository.findByUsername(Mockito.any())).thenReturn(null);
     assertThrows(
         UsernameNotFoundException.class,

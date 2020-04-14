@@ -1,12 +1,15 @@
 package com.exelaration.abstractmemery.controllers;
 
+import static org.hamcrest.Matchers.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 import com.exelaration.abstractmemery.domains.Meme;
 import com.exelaration.abstractmemery.repositories.MemeRepository;
 import com.exelaration.abstractmemery.services.implementations.MemeServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -102,5 +105,32 @@ public class MemeControllerTest {
     when(memeService.getMeme(3)).thenReturn(meme);
 
     mockMvc.perform(MockMvcRequestBuilders.get(url)).andExpect(ok);
+  }
+
+  public void getMemesForGallery_WhenMemeExists_ExpectStatus200andJSONreturn() throws Exception {
+    ResultMatcher ok = MockMvcResultMatchers.status().isOk();
+    String url = "/meme";
+    ArrayList<String> expectedMemeData = new ArrayList<String>();
+    expectedMemeData.add("TestMemeData");
+
+    when(memeService.getMemes()).thenReturn(expectedMemeData);
+
+    mockMvc
+        .perform(MockMvcRequestBuilders.get(url))
+        .andExpect(ok)
+        .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_VALUE))
+        .andExpect(jsonPath("$", hasSize(1)))
+        .andExpect(jsonPath("$[0]", is("TestMemeData")));
+  }
+
+  @Test
+  public void getMemesForGallery_WhenMemeIsNull_ExpectStatus404andJSONreturn() throws Exception {
+    ResultMatcher notFound = MockMvcResultMatchers.status().isNotFound();
+    String url = "/meme";
+
+    when(memeService.getMemes())
+        .thenThrow(new ResponseStatusException(HttpStatus.NOT_FOUND, "Images Do Not Exist"));
+
+    mockMvc.perform(MockMvcRequestBuilders.get(url)).andExpect(notFound);
   }
 }
