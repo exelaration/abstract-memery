@@ -1,11 +1,13 @@
 package com.exelaration.abstractmemery.security;
 
+import static com.exelaration.abstractmemery.constants.SecurityConstants.DIRECT_MEME_LINK;
 import static com.exelaration.abstractmemery.constants.SecurityConstants.GALLERY_URL;
 import static com.exelaration.abstractmemery.constants.SecurityConstants.SIGN_UP_URL;
 
 import com.exelaration.abstractmemery.filters.JWTAuthenticationFilter;
 import com.exelaration.abstractmemery.filters.JWTAuthorizationFilter;
 import com.exelaration.abstractmemery.services.implementations.UserDetailsServiceImpl;
+import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
@@ -38,7 +40,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         .csrf()
         .disable()
         .authorizeRequests()
-        .antMatchers(HttpMethod.GET, GALLERY_URL)
+        .antMatchers(HttpMethod.GET, GALLERY_URL, DIRECT_MEME_LINK)
         .permitAll()
         .and()
         .authorizeRequests()
@@ -62,7 +64,13 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
   @Bean
   CorsConfigurationSource corsConfigurationSource() {
     final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-    source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
+    CorsConfiguration configuration = new CorsConfiguration();
+    configuration.setAllowedOrigins(Arrays.asList("*"));
+    configuration.setAllowedHeaders(Arrays.asList("*"));
+    configuration.setAllowedMethods(Arrays.asList("GET", "POST", "OPTIONS", "PUT", "DELETE"));
+    configuration.setAllowCredentials(true);
+    configuration.setExposedHeaders(Arrays.asList("Authorization"));
+    source.registerCorsConfiguration("/**", configuration);
     return source;
   }
 }

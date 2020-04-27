@@ -9,6 +9,7 @@ import "./MemeUpload.css";
 import MemeResult from "./MemeResult";
 import domtoimage from "dom-to-image-more";
 import { useHistory } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 type MemeProps = {
   memeName: String;
@@ -31,6 +32,7 @@ function MemeUpload(props: MemeProps) {
   const [topText, setTopText] = useState("");
   const [bottomText, setBottomText] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [cookies] = useCookies(["userToken"]);
 
   const history = useHistory();
 
@@ -53,20 +55,28 @@ function MemeUpload(props: MemeProps) {
   function formSubmitHandler(event: any) {
     event.preventDefault();
     let error = "";
-    if ((topText.length === 0 && bottomText.length === 0) || props.imageID === 0) {
-      error = "You must add either a top or bottom caption or both with an uploaded image.";
+    if (
+      (topText.length === 0 && bottomText.length === 0) ||
+      props.imageID === 0
+    ) {
+      error =
+        "You must add either a top or bottom caption or both with an uploaded image.";
       setErrorMessage(error);
     } else {
       generateMeme().then((dataUrl: string) => {
         let timestamp = Date.now();
         axios
-          .post<MemeResponse>("http://localhost:8080/meme/", {
-            topText: topText,
-            bottomText: bottomText,
-            memeName: timestamp,
-            imageId: props.imageID,
-            memeUrl: dataUrl,
-          })
+          .post<MemeResponse>(
+            "http://localhost:8080/meme/",
+            {
+              topText: topText,
+              bottomText: bottomText,
+              memeName: timestamp,
+              imageId: props.imageID,
+              memeUrl: dataUrl,
+            },
+            { headers: { Authorization: cookies.userToken } }
+          )
           .then((res) => {
             history.push(`/memes/${res.data.id}`);
           });

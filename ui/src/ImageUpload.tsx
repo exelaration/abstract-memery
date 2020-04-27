@@ -6,6 +6,7 @@ import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import "./ImageUpload.css";
 import MemeContent from "./MemeContent";
+import { useCookies } from "react-cookie";
 
 type ImageProps = {
   topText: string;
@@ -24,6 +25,7 @@ function ImageUpload(props: ImageProps) {
 
   const [imageData, setImageData] = useState("");
   const [file, setFile] = useState<File | null>(null);
+  const [cookies] = useCookies(["userToken"]);
 
   function handleSubmit(e: any) {
     e.preventDefault();
@@ -31,7 +33,9 @@ function ImageUpload(props: ImageProps) {
       const formData = new FormData();
       formData.append("file", file);
       axios
-        .post<ImageResponse>("http://localhost:8080/upload/", formData)
+        .post<ImageResponse>("http://localhost:8080/upload/", formData, {
+          headers: { Authorization: cookies.userToken },
+        })
         .then((response) => {
           dispatch({ type: AppActions.updateImageID, value: response.data.id });
           setImageData(response.data.fileData);
