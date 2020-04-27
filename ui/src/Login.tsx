@@ -7,6 +7,8 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
+import { useCookies } from "react-cookie";
+import { useHistory } from "react-router-dom";
 
 const validationSchema = Yup.object({
   username: Yup.string().email().max(30).required("Required"),
@@ -14,6 +16,9 @@ const validationSchema = Yup.object({
 });
 
 function Login() {
+  // eslint-disable-next-line
+  const [cookies, setCookie] = useCookies(["userToken"]);
+  const history = useHistory();
   const { handleSubmit, handleChange, values, errors } = useFormik({
     initialValues: {
       username: "",
@@ -27,8 +32,8 @@ function Login() {
           password: values.password,
         })
         .then((res) => {
-          console.log(res);
-          alert("Logged in");
+          setCookie("userToken", res.headers["authorization"], { path: "/" });
+          history.push("/");
         })
         .catch((error) => {
           alert("Unable to log in. Please check your username and password");
@@ -39,8 +44,8 @@ function Login() {
   return (
     <div className="signup">
       <header className="signupHeader">
-        <Button href="/create-meme" variant="primary">
-          Return to Meme Creation
+        <Button href="/" variant="primary">
+          Return to Meme Gallery
         </Button>
         <h1>Login</h1>
         <Form onSubmit={handleSubmit}>

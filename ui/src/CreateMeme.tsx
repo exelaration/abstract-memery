@@ -8,10 +8,19 @@ import "./CreateMeme.css";
 import MemeUpload from "./MemeUpload";
 import ImageUpload from "./ImageUpload";
 import Button from "react-bootstrap/Button";
+import { useCookies } from "react-cookie";
+import { useHistory } from "react-router-dom";
 
 function CreateMeme() {
   const [appState, dispatch] = useReducer(AppDispatchReducer, initialState);
   const value = { state: appState, dispatch };
+  // eslint-disable-next-line
+  const [cookies, setCookie] = useCookies(["userToken"]);
+  const history = useHistory();
+  function onLogout() {
+    setCookie("userToken", "not logged in", { path: "/" });
+    history.push("/login");
+  }
 
   return (
     <div className="Create">
@@ -25,6 +34,9 @@ function CreateMeme() {
           </Button>
           <Button type="submit" href="/login" variant="primary">
             Login
+          </Button>
+          <Button type="button" onClick={onLogout} variant="primary">
+            Logout
           </Button>
         </div>
         <h1 className="inputPrompt">Create Your Meme</h1>
