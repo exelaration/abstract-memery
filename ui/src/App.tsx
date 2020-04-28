@@ -7,6 +7,7 @@ import MemePage from "./MemePage";
 import Login from "./Login";
 import SignUp from "./SignUp";
 import Gallery from "./MemeGallery";
+import SearchResults from "./SearchResults";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/login" component={Login} exact />
         <Route path="/memes/:memeID" component={MemePage} exact />
         <Route path="/create-meme" component={CreateMeme} exact />
+        <Route path="/search/:text" component={SearchResults} exact />
         <Route component={RouterError} />
       </Switch>
     </Router>

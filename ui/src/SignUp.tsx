@@ -8,6 +8,7 @@ import Button from "react-bootstrap/Button";
 import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
 import { useHistory } from "react-router-dom";
+import NavBar from "./NavBar";
 
 const validationSchema = Yup.object({
   username: Yup.string().email().max(30).required("Required"),
@@ -52,10 +53,8 @@ function SignUp() {
 
   return (
     <div className="signup">
+      <NavBar></NavBar>
       <header className="signupHeader">
-        <Button href="/create-meme" variant="primary">
-          Return to Meme Creation
-        </Button>
         <h1>Sign Up for an Abstract Memery Account</h1>
         <Form onSubmit={handleSubmit}>
           <InputGroup>

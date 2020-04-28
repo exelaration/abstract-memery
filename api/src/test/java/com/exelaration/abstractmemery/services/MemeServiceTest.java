@@ -192,11 +192,77 @@ public class MemeServiceTest {
     expectedMemes.add(expectedMeme3);
 
     Mockito.when(memeMetadataService.getMemes()).thenReturn(expectedMemes);
+  }
+
+  public void getMemesWithText_WhenFileStorageServiceThrowsException_expectNull() throws Exception {
+    ArrayList<Meme> actualMemes = new ArrayList<Meme>();
+    Meme testMeme = new Meme();
+    testMeme.setTopText("test");
+    actualMemes.add(testMeme);
+
+    Mockito.when(memeMetadataService.findByText("test")).thenReturn(actualMemes);
+    doThrow(new RuntimeException()).when(fileStorageService).getFileData(Mockito.any());
+    assertNull(memeService.getMemesWithText("test"));
+  }
+
+  @Test
+  public void getMemesWithText_WhenSuccessful_expectMeme() throws Exception {
+    ArrayList<Meme> actualMemes = new ArrayList<Meme>();
+    String memeURL = "testMemeURL";
+    Meme testMeme = new Meme();
+    testMeme.setTopText("test");
+    actualMemes.add(testMeme);
+
+    Mockito.when(memeMetadataService.findByText("test")).thenReturn(actualMemes);
+    Mockito.when(fileStorageService.getFileData(Mockito.any())).thenReturn(memeURL);
+    assertEquals(memeURL, memeService.getMemesWithText("test").get(0).getMemeUrl());
+  }
+
+  @Test
+  public void getMemesWithText_WhenMemesDoNotExistLocally_expectNullMemes() throws Exception {
+    ArrayList<Meme> actualMemes = new ArrayList<Meme>();
+    Meme testMeme = new Meme();
+    testMeme.setMemeName("testMeme");
+    actualMemes.add(testMeme);
+    String memeURL = null;
+
+    Mockito.when(memeMetadataService.findByText("test")).thenReturn(actualMemes);
+    Mockito.when(fileStorageService.getFileData(Mockito.any())).thenReturn(memeURL);
+    assertEquals(memeURL, memeService.getMemesWithText("test").get(0).getMemeUrl());
+  }
+
+  @Test
+  public void getMemesWithText_WhenSomeMemesExistLocally_expectSomeMemes() throws Exception {
+    ArrayList<Meme> actualMemes = new ArrayList<Meme>();
+    Meme testMeme1 = new Meme();
+    testMeme1.setTopText("test");
+    actualMemes.add(testMeme1);
+    Meme testMeme2 = new Meme();
+    testMeme2.setTopText("test");
+    actualMemes.add(testMeme2);
+    Meme testMeme3 = new Meme();
+    testMeme3.setBottomText("test");
+    actualMemes.add(testMeme3);
+
+    Meme meme1 = new Meme();
+    meme1.setMemeUrl("testMemeURL1");
+    Meme meme2 = new Meme();
+    meme2.setMemeUrl("");
+    Meme meme3 = new Meme();
+    meme3.setMemeUrl("testMemeURL3");
+    ArrayList<Meme> expectedMemes = new ArrayList<Meme>();
+    expectedMemes.add(meme1);
+    expectedMemes.add(meme2);
+    expectedMemes.add(meme3);
+
+    Mockito.when(memeMetadataService.findByText("test")).thenReturn(actualMemes);
     Mockito.when(fileStorageService.getFileData(Mockito.any()))
-        .thenReturn(memeURL1)
-        .thenReturn(memeURL2)
-        .thenReturn(memeURL3);
-    assertEquals(expectedMemes, memeService.getMemes());
+        .thenReturn(meme1.getMemeUrl())
+        .thenReturn("")
+        .thenReturn(meme3.getMemeUrl());
+    ArrayList<Meme> memes = memeService.getMemesWithText("test");
+    assertEquals(expectedMemes.get(0).getMemeUrl(), memes.get(0).getMemeUrl());
+    assertEquals(expectedMemes.get(1).getMemeUrl(), memes.get(1).getMemeUrl());
   }
 
   @Test
@@ -214,5 +280,13 @@ public class MemeServiceTest {
     String actualMessage = exception.getMessage();
 
     assertTrue(actualMessage.contains(expectedMessage));
+  }
+
+  @Test
+  public void getMemesWithText_WhenInvalidSearch_ExpectNull() throws Exception {
+    Mockito.when(memeMetadataService.findByText("t"))
+        .thenThrow(
+            new IllegalArgumentException("Search query must contain more than one character"));
+    assertNull(memeService.getMemesWithText("t"));
   }
 }

@@ -15,4 +15,6 @@ public interface MemeMetadataService {
   public void deleteById(Integer id);
 
   public ArrayList<Meme> getMemes();
+
+  public ArrayList<Meme> findByText(String text) throws Exception;
 }
