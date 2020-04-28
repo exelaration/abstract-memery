@@ -126,11 +126,41 @@ public class MemeControllerTest {
   }
 
   @Test
+  public void getMemesWithText_WhenImageIsPresent_ExpectStatus200andJSONreturn() throws Exception {
+    ResultMatcher ok = MockMvcResultMatchers.status().isOk();
+    String url = "/meme/?text=dog";
+    ArrayList<Meme> expectedMemeData = new ArrayList<Meme>();
+    Meme meme = new Meme();
+    meme.setMemeName("dog");
+    expectedMemeData.add(meme);
+
+    when(memeService.getMemesWithText("dog")).thenReturn(expectedMemeData);
+
+    mockMvc
+        .perform(MockMvcRequestBuilders.get(url))
+        .andExpect(ok)
+        .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_VALUE))
+        .andExpect(jsonPath("$", hasSize(1)))
+        .andExpect(jsonPath("$[0]['memeName']", is("dog")));
+  }
+
+  @Test
   public void getMemesForGallery_WhenMemeIsNull_ExpectStatus404andJSONreturn() throws Exception {
     ResultMatcher notFound = MockMvcResultMatchers.status().isNotFound();
     String url = "/meme";
 
     when(memeService.getMemes())
+        .thenThrow(new ResponseStatusException(HttpStatus.NOT_FOUND, "Images Do Not Exist"));
+
+    mockMvc.perform(MockMvcRequestBuilders.get(url)).andExpect(notFound);
+  }
+
+  @Test
+  public void getMemeswithText_WhenMemeIsNull_ExpectStatus404andJSONreturn() throws Exception {
+    ResultMatcher notFound = MockMvcResultMatchers.status().isNotFound();
+    String url = "/meme/?text=dog";
+
+    when(memeService.getMemesWithText("dog"))
         .thenThrow(new ResponseStatusException(HttpStatus.NOT_FOUND, "Images Do Not Exist"));
 
     mockMvc.perform(MockMvcRequestBuilders.get(url)).andExpect(notFound);

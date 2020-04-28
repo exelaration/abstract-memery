@@ -63,4 +63,26 @@ public class MemeServiceImpl implements MemeService {
     }
     return memesWithData;
   }
+
+  public ArrayList<Meme> getMemesWithText(String text) {
+    try {
+      ArrayList<Meme> memes = memeMetadataService.findByText(text);
+      if (memes == null) {
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Images Do Not Exist");
+      }
+      ArrayList<Meme> memesWithData = new ArrayList<Meme>();
+      for (Meme meme : memes) {
+        try {
+          String memeData = fileStorageService.getFileData(meme.getMemeName());
+          meme.setMemeUrl(memeData);
+          memesWithData.add(meme);
+        } catch (Exception e) {
+          return null;
+        }
+      }
+      return memesWithData;
+    } catch (Exception e) {
+      return null;
+    }
+  }
 }

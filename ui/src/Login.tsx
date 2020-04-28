@@ -9,6 +9,7 @@ import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
 import { useCookies } from "react-cookie";
 import { useHistory } from "react-router-dom";
+import NavBar from "./NavBar";
 
 const validationSchema = Yup.object({
   username: Yup.string().email().max(30).required("Required"),
@@ -33,7 +34,7 @@ function Login() {
         })
         .then((res) => {
           setCookie("userToken", res.headers["authorization"], { path: "/" });
-          history.push("/");
+          history.push("/create-meme");
         })
         .catch((error) => {
           alert("Unable to log in. Please check your username and password");
@@ -43,10 +44,8 @@ function Login() {
 
   return (
     <div className="signup">
+      <NavBar></NavBar>
       <header className="signupHeader">
-        <Button href="/" variant="primary">
-          Return to Meme Gallery
-        </Button>
         <h1>Login</h1>
         <Form onSubmit={handleSubmit}>
           <InputGroup>
