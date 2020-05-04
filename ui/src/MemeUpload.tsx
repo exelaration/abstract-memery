@@ -53,8 +53,8 @@ function MemeUpload(props: MemeProps) {
   function formSubmitHandler(event: any) {
     event.preventDefault();
     let error = "";
-    if (topText.length === 0 && bottomText.length === 0) {
-      error = "You must add either a top or bottom caption or both.";
+    if ((topText.length === 0 && bottomText.length === 0) || props.imageID === 0) {
+      error = "You must add either a top or bottom caption or both with an uploaded image.";
       setErrorMessage(error);
     } else {
       generateMeme().then((dataUrl: string) => {
