@@ -5,8 +5,11 @@ import com.exelaration.abstractmemery.services.FileStorageService;
 import com.exelaration.abstractmemery.services.MemeMetadataService;
 import com.exelaration.abstractmemery.services.MemeService;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -46,8 +49,9 @@ public class MemeServiceImpl implements MemeService {
     return memeData;
   }
 
-  public ArrayList<Meme> getMemes() {
-    ArrayList<Meme> memes = memeMetadataService.getMemes();
+  public ArrayList<Meme> getMemes(int page) {
+    Pageable pageable = PageRequest.of(page, 10);
+    List<Meme> memes = memeMetadataService.findAll(pageable);
     return getMemesFromFileSystem(memes);
   }
 
@@ -56,7 +60,7 @@ public class MemeServiceImpl implements MemeService {
     return getMemesFromFileSystem(userMemes);
   }
 
-  private ArrayList<Meme> getMemesFromFileSystem(ArrayList<Meme> memes) {
+  private ArrayList<Meme> getMemesFromFileSystem(List<Meme> memes) {
     if (memes == null) {
       throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Images Do Not Exist");
     }
@@ -93,5 +97,9 @@ public class MemeServiceImpl implements MemeService {
     } catch (Exception e) {
       return null;
     }
+  }
+
+  public int getCount() {
+    return (int) memeMetadataService.getCount();
   }
 }
