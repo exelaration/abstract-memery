@@ -110,13 +110,13 @@ public class MemeControllerTest {
   @Test
   public void getMemesForGallery_WhenMemeExists_ExpectStatus200andJSONreturn() throws Exception {
     ResultMatcher ok = MockMvcResultMatchers.status().isOk();
-    String url = "/meme";
+    String url = "/meme/?page=0";
     ArrayList<Meme> expectedMemes = new ArrayList<Meme>();
     Meme testMeme = new Meme();
     testMeme.setMemeName("testMeme");
     expectedMemes.add(testMeme);
 
-    when(memeService.getMemes()).thenReturn(expectedMemes);
+    when(memeService.getMemes(0)).thenReturn(expectedMemes);
 
     mockMvc
         .perform(MockMvcRequestBuilders.get(url))
@@ -181,9 +181,9 @@ public class MemeControllerTest {
   @Test
   public void getMemesForGallery_WhenMemeIsNull_ExpectStatus404andJSONreturn() throws Exception {
     ResultMatcher notFound = MockMvcResultMatchers.status().isNotFound();
-    String url = "/meme";
+    String url = "/meme/?page=0";
 
-    when(memeService.getMemes())
+    when(memeService.getMemes(0))
         .thenThrow(new ResponseStatusException(HttpStatus.NOT_FOUND, "Images Do Not Exist"));
 
     mockMvc.perform(MockMvcRequestBuilders.get(url)).andExpect(notFound);

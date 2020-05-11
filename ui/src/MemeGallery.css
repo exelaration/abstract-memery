@@ -12,3 +12,13 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
+
+.pages {
+  background-color: #282c34;
+  align-items: center;
+  justify-content: center;
+  color: #282c34;
+  border-radius: 0%;
+  padding: 0;
+  margin: auto;
+}

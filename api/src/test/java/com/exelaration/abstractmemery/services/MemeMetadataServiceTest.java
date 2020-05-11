@@ -7,12 +7,17 @@ import com.exelaration.abstractmemery.domains.Meme;
 import com.exelaration.abstractmemery.repositories.MemeRepository;
 import com.exelaration.abstractmemery.services.implementations.MemeMetadataServiceImpl;
 import java.util.ArrayList;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 public class MemeMetadataServiceTest {
   @Mock private MemeRepository memeRepository;
@@ -24,23 +29,29 @@ public class MemeMetadataServiceTest {
   }
 
   @Test
-  public void getMemes_WhenReturnsNull_expectEmptyArray() {
-    Mockito.when(memeRepository.findTop10ByIsPublicTrueOrderByIdDesc()).thenReturn(null);
+  public void findAll_WhenReturnsNull_expectEmptyPage() {
+    Pageable pageable = PageRequest.of(0, 10);
+    List<Meme> memes = new ArrayList<Meme>();
+    Page<Meme> memeResponse = new PageImpl<Meme>(memes);
 
-    assertNull(memeMetadataService.getMemes());
+    Mockito.when(memeRepository.findAllByIsPublicTrueOrderByIdDesc(Mockito.any(Pageable.class)))
+        .thenReturn(memeResponse);
+    assertEquals(memeResponse.getContent(), memeMetadataService.findAll(pageable));
   }
 
   @Test
-  public void getMemes_WhenReturnsSuccessfully_expectArray() {
-    ArrayList<Meme> expectedMemes = new ArrayList<Meme>();
+  public void getMemes_WhenReturnsSuccessfully_expectPage() {
+    Pageable pageable = PageRequest.of(0, 10);
+    List<Meme> memes = new ArrayList<Meme>();
     Meme testMeme = new Meme();
     testMeme.setMemeName("testMeme");
-    expectedMemes.add(testMeme);
+    memes.add(testMeme);
+    Page<Meme> memeResponse = new PageImpl<Meme>(memes);
 
-    Mockito.when(memeRepository.findTop10ByIsPublicTrueOrderByIdDesc()).thenReturn(expectedMemes);
+    Mockito.when(memeRepository.findAllByIsPublicTrueOrderByIdDesc(Mockito.any(Pageable.class)))
+        .thenReturn(memeResponse);
 
-    assertEquals(
-        expectedMemes.get(0).getMemeName(), memeMetadataService.getMemes().get(0).getMemeName());
+    assertEquals(memeResponse.getContent(), memeMetadataService.findAll(pageable));
   }
 
   @Test

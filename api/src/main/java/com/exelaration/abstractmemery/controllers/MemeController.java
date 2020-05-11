@@ -27,9 +27,9 @@ public class MemeController {
     return memeService.getMeme(id);
   }
 
-  @GetMapping()
-  public ArrayList<Meme> getMemesForGallery() {
-    return memeService.getMemes();
+  @GetMapping(value = "/", params = "page")
+  public ArrayList<Meme> getMemesForGallery(@RequestParam int page) {
+    return memeService.getMemes(page);
   }
 
   @GetMapping(value = "/", params = "userId")
@@ -40,5 +40,10 @@ public class MemeController {
   @GetMapping(value = "/", params = "text")
   public ArrayList<Meme> getMemesForSearch(@RequestParam String text) throws Exception {
     return memeService.getMemesWithText(text);
+  }
+
+  @GetMapping(value = "/count")
+  public int getMemeCount() {
+    return memeService.getCount();
   }
 }
