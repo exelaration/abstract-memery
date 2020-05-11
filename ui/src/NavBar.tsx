@@ -13,7 +13,12 @@ import { useCookies } from "react-cookie";
 function NavBar() {
   const [searchCriteria, setSearchCriteria] = useState("");
   const history = useHistory();
-  const [cookies, setCookie] = useCookies(["userToken"]);
+  const [cookies, setCookie] = useCookies(["userToken", "username"]);
+
+  let displayUser =
+    cookies.username !== undefined && cookies.username !== "username"
+      ? cookies.username
+      : "Login";
 
   function submitHandler(event: any) {
     event.preventDefault();
@@ -27,6 +32,7 @@ function NavBar() {
 
   function onLogout() {
     setCookie("userToken", "not logged in", { path: "/" });
+    setCookie("username", "username", { path: "/" });
     history.push("/login");
   }
 
@@ -36,6 +42,15 @@ function NavBar() {
       history.push("/login");
     } else {
       history.push("/create-meme");
+    }
+  }
+
+  function goToSettings() {
+    if (cookies.userToken === "not logged in") {
+      alert("You must be logged in to access this page");
+      history.push("/login");
+    } else {
+      history.push("/user/settings");
     }
   }
 
@@ -61,10 +76,11 @@ function NavBar() {
           </Button>
         </Form>
 
-        <NavDropdown title="Login" id="basic-nav-dropdown">
+        <NavDropdown title={displayUser} id="basic-nav-dropdown">
           <NavDropdown.Item href="/login">Login</NavDropdown.Item>
           <NavDropdown.Item href="/sign-up">Sign-Up</NavDropdown.Item>
           <NavDropdown.Item onClick={onLogout}>Log-Out</NavDropdown.Item>
+          <NavDropdown.Item onClick={goToSettings}>Settings</NavDropdown.Item>
         </NavDropdown>
       </Navbar.Collapse>
     </Navbar>

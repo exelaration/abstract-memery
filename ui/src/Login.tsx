@@ -28,7 +28,7 @@ interface MetadataObj {
 
 function Login() {
   // eslint-disable-next-line
-  const [cookies, setCookie] = useCookies(["userToken", "userId"]);
+  const [cookies, setCookie] = useCookies(["userToken", "userId", "username"]);
   const history = useHistory();
   const { handleSubmit, handleChange, values, errors } = useFormik({
     initialValues: {
@@ -47,6 +47,7 @@ function Login() {
           let token = res.headers["authorization"].replace("Bearer ", "");
           let decodedToken: MetadataObj = jwtDecode(token);
           setCookie("userId", decodedToken["id"], { path: "/" });
+          setCookie("username", decodedToken["sub"], { path: "/" });
           history.push("/create-meme");
         })
         .catch((error) => {
