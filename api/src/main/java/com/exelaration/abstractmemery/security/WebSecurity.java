@@ -6,6 +6,7 @@ import static com.exelaration.abstractmemery.constants.SecurityConstants.SIGN_UP
 
 import com.exelaration.abstractmemery.filters.JWTAuthenticationFilter;
 import com.exelaration.abstractmemery.filters.JWTAuthorizationFilter;
+import com.exelaration.abstractmemery.repositories.UserRepository;
 import com.exelaration.abstractmemery.services.implementations.UserDetailsServiceImpl;
 import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,11 +26,15 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 public class WebSecurity extends WebSecurityConfigurerAdapter {
 
   @Autowired private UserDetailsServiceImpl userDetailsService;
+  @Autowired private UserRepository userRepository;
   private BCryptPasswordEncoder bCryptPasswordEncoder;
 
   public WebSecurity(
-      UserDetailsServiceImpl userDetailsService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+      UserDetailsServiceImpl userDetailsService,
+      UserRepository userRepository,
+      BCryptPasswordEncoder bCryptPasswordEncoder) {
     this.userDetailsService = userDetailsService;
+    this.userRepository = userRepository;
     this.bCryptPasswordEncoder = bCryptPasswordEncoder;
   }
 
@@ -49,7 +54,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         .anyRequest()
         .authenticated()
         .and()
-        .addFilter(new JWTAuthenticationFilter(authenticationManager()))
+        .addFilter(new JWTAuthenticationFilter(authenticationManager(), userRepository))
         .addFilter(new JWTAuthorizationFilter(authenticationManager()))
         // this disables session creation on Spring Security
         .sessionManagement()

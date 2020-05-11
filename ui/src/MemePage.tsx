@@ -6,7 +6,6 @@ import { useCookies } from "react-cookie";
 import { useHistory } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 
-
 function MemePage(props: any) {
   const [imageData, setImageData] = useState("");
   const [displayMessage, setDisplayMessage] = useState("");
@@ -45,7 +44,9 @@ function MemePage(props: any) {
       <header className="memepageHeader">
         <h1>{displayMessage}</h1>
         <img src={"data:image/jpeg;base64," + imageData} alt="404 Not Found" />
-        <Button onClick={goToCreateMeme}>Press here to make another meme!</Button>
+        <Button onClick={goToCreateMeme}>
+          Press here to make another meme!
+        </Button>
       </header>
     </div>
   );

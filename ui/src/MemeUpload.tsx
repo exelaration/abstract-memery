@@ -25,6 +25,7 @@ interface MemeResponse {
   topText: string;
   bottomText: string;
   imageId: number;
+  userId: number;
 }
 
 function MemeUpload(props: MemeProps) {
@@ -32,7 +33,7 @@ function MemeUpload(props: MemeProps) {
   const [topText, setTopText] = useState("");
   const [bottomText, setBottomText] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const [cookies] = useCookies(["userToken"]);
+  const [cookies] = useCookies(["userToken", "userId"]);
 
   const history = useHistory();
 
@@ -74,6 +75,7 @@ function MemeUpload(props: MemeProps) {
               memeName: timestamp,
               imageId: props.imageID,
               memeUrl: dataUrl,
+              userId: cookies.userId
             },
             { headers: { Authorization: cookies.userToken } }
           )
