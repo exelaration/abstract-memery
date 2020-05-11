@@ -28,4 +28,7 @@ public class Meme {
 
   @Column(name = "image_id")
   private int imageId;
+
+  @Column(name = "user_id")
+  private int userId;
 }

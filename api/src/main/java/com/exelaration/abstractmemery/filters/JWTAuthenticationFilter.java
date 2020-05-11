@@ -8,6 +8,7 @@ import static com.exelaration.abstractmemery.constants.SecurityConstants.TOKEN_P
 
 import com.auth0.jwt.JWT;
 import com.exelaration.abstractmemery.domains.ApplicationUser;
+import com.exelaration.abstractmemery.repositories.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,9 +28,12 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
   @Autowired private AuthenticationManager authenticationManager;
+  @Autowired private UserRepository userRepository;
 
-  public JWTAuthenticationFilter(AuthenticationManager authenticationManager) {
+  public JWTAuthenticationFilter(
+      AuthenticationManager authenticationManager, UserRepository userRepository) {
     this.authenticationManager = authenticationManager;
+    this.userRepository = userRepository;
   }
 
   @Override
@@ -52,11 +56,19 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
       HttpServletRequest req, HttpServletResponse res, FilterChain chain, Authentication auth)
       throws IOException, ServletException {
 
+    String username = ((User) auth.getPrincipal()).getUsername();
+    ApplicationUser applicationUser = findUser(username);
+    int id = applicationUser.getId();
     String token =
         JWT.create()
-            .withSubject(((User) auth.getPrincipal()).getUsername())
+            .withSubject(username)
+            .withClaim("id", id)
             .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
             .sign(HMAC512(SECRET.getBytes()));
     res.addHeader(HEADER_STRING, TOKEN_PREFIX + token);
+  }
+
+  public ApplicationUser findUser(String username) {
+    return userRepository.findByUsername(username);
   }
 }
