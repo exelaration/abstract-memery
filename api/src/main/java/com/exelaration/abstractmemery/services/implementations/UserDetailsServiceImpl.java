@@ -23,7 +23,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
   }
 
   public ApplicationUser saveUser(ApplicationUser user) {
-    user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+    if (user.getUsername().length() == 0) {
+      user.setUsername(userRepository.findById(user.getId()).get().getUsername());
+    }
+    if (user.getPassword() != null && user.getPassword().length() > 0) {
+      user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+    } else {
+      user.setPassword(userRepository.findById(user.getId()).get().getPassword());
+    }
     try {
       return userRepository.save(user);
     } catch (Exception e) {

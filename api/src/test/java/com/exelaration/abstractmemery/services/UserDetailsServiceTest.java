@@ -8,6 +8,7 @@ import static org.mockito.Mockito.verify;
 import com.exelaration.abstractmemery.domains.ApplicationUser;
 import com.exelaration.abstractmemery.repositories.UserRepository;
 import com.exelaration.abstractmemery.services.implementations.UserDetailsServiceImpl;
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -47,11 +48,46 @@ public class UserDetailsServiceTest {
   }
 
   @Test
+  public void saveUser_WhenUserSavesWithNoUsernameProvided_ExpectUser() {
+    ApplicationUser expectedUser = new ApplicationUser();
+    expectedUser.setPassword("password");
+    Optional<ApplicationUser> expectedUserOpt = Optional.of(expectedUser);
+    expectedUserOpt.get().setUsername("username");
+
+    Mockito.when(userRepository.findById(Mockito.any())).thenReturn(expectedUserOpt);
+    Mockito.when(userRepository.save(Mockito.any())).thenReturn(expectedUser);
+
+    expectedUser.setUsername(expectedUserOpt.get().getUsername());
+    ApplicationUser actualUser = userDetailsService.saveUser(expectedUser);
+    expectedUser.setPassword(BCryptPasswordEncoder.encode(expectedUser.getPassword()));
+    assertEquals(expectedUser, actualUser);
+  }
+
+  @Test
+  public void saveUser_WhenUserSavesWithNoPasswordProvided_ExpectUser() {
+    ApplicationUser expectedUser = new ApplicationUser();
+    expectedUser.setUsername("username");
+    Optional<ApplicationUser> expectedUserOpt = Optional.of(expectedUser);
+    expectedUserOpt.get().setPassword("password");
+
+    Mockito.when(userRepository.findById(Mockito.any())).thenReturn(expectedUserOpt);
+    Mockito.when(userRepository.save(Mockito.any())).thenReturn(expectedUser);
+
+    expectedUser.setUsername(expectedUserOpt.get().getPassword());
+    ApplicationUser actualUser = userDetailsService.saveUser(expectedUser);
+    expectedUser.setPassword(BCryptPasswordEncoder.encode(expectedUser.getPassword()));
+    assertEquals(expectedUser, actualUser);
+  }
+
+  @Test
   public void saveUser_WhenUserSaveUnsuccessful_ExpectNull() {
-    ApplicationUser user = new ApplicationUser();
+    ApplicationUser expectedUser = new ApplicationUser();
+    expectedUser.setUsername("admin");
+    expectedUser.setPassword("password");
+
     Mockito.when(userRepository.save(Mockito.any())).thenThrow(new IllegalArgumentException());
-    assertNull(userDetailsService.saveUser(user));
-    verify(BCryptPasswordEncoder).encode(Mockito.eq(user.getPassword()));
+    assertNull(userDetailsService.saveUser(expectedUser));
+    verify(BCryptPasswordEncoder).encode(Mockito.eq("password"));
   }
 
   @Test

@@ -75,7 +75,7 @@ function MemeUpload(props: MemeProps) {
               memeName: timestamp,
               imageId: props.imageID,
               memeUrl: dataUrl,
-              userId: cookies.userId
+              userId: cookies.userId,
             },
             { headers: { Authorization: cookies.userToken } }
           )

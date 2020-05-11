@@ -2,6 +2,7 @@ package com.exelaration.abstractmemery.security;
 
 import static com.exelaration.abstractmemery.constants.SecurityConstants.DIRECT_MEME_LINK;
 import static com.exelaration.abstractmemery.constants.SecurityConstants.GALLERY_URL;
+import static com.exelaration.abstractmemery.constants.SecurityConstants.SETTINGS_URL;
 import static com.exelaration.abstractmemery.constants.SecurityConstants.SIGN_UP_URL;
 
 import com.exelaration.abstractmemery.filters.JWTAuthenticationFilter;
@@ -51,7 +52,9 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         .authorizeRequests()
         .antMatchers(HttpMethod.POST, SIGN_UP_URL)
         .permitAll()
-        .anyRequest()
+        .and()
+        .authorizeRequests()
+        .antMatchers(HttpMethod.PUT, SETTINGS_URL)
         .authenticated()
         .and()
         .addFilter(new JWTAuthenticationFilter(authenticationManager(), userRepository))
