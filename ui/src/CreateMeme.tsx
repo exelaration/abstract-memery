@@ -8,11 +8,13 @@ import "./CreateMeme.css";
 import MemeUpload from "./MemeUpload";
 import ImageUpload from "./ImageUpload";
 import NavBar from "./NavBar";
+import { useCookies } from "react-cookie";
 
 function CreateMeme() {
   const [appState, dispatch] = useReducer(AppDispatchReducer, initialState);
   const value = { state: appState, dispatch };
-
+  // eslint-disable-next-line
+  const [cookies, setCookie] = useCookies(["userToken", "userId"]);
 
   return (
     <div className="Create">

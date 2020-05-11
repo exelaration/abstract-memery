@@ -10,15 +10,25 @@ import FormControl from "react-bootstrap/FormControl";
 import { useCookies } from "react-cookie";
 import { useHistory } from "react-router-dom";
 import NavBar from "./NavBar";
+import jwtDecode from "jwt-decode";
 
 const validationSchema = Yup.object({
   username: Yup.string().email().max(30).required("Required"),
   password: Yup.string().required("Required"),
 });
 
+interface Metadata {
+  key: string;
+  value: any;
+}
+
+interface MetadataObj {
+  [key: string]: Metadata;
+}
+
 function Login() {
   // eslint-disable-next-line
-  const [cookies, setCookie] = useCookies(["userToken"]);
+  const [cookies, setCookie] = useCookies(["userToken", "userId"]);
   const history = useHistory();
   const { handleSubmit, handleChange, values, errors } = useFormik({
     initialValues: {
@@ -34,6 +44,9 @@ function Login() {
         })
         .then((res) => {
           setCookie("userToken", res.headers["authorization"], { path: "/" });
+          let token = cookies.userToken.replace("Bearer ", "");
+          let decodedToken: MetadataObj = jwtDecode(token);
+          setCookie("userId", decodedToken["id"], { path: "/" });
           history.push("/create-meme");
         })
         .catch((error) => {
