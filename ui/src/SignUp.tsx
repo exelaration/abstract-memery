@@ -43,7 +43,7 @@ function SignUp() {
         })
         .then((res) => {
           if (res.data === "User has been created") {
-            history.push(`/`);
+            history.push("/login");
           } else {
             alert("User already exists.  Please select a different username");
           }

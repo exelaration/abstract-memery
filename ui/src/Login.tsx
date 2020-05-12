@@ -44,7 +44,7 @@ function Login() {
         })
         .then((res) => {
           setCookie("userToken", res.headers["authorization"], { path: "/" });
-          let token = cookies.userToken.replace("Bearer ", "");
+          let token = res.headers["authorization"].replace("Bearer ", "");
           let decodedToken: MetadataObj = jwtDecode(token);
           setCookie("userId", decodedToken["id"], { path: "/" });
           history.push("/create-meme");
