@@ -32,7 +32,7 @@ function MemeUpload(props: MemeProps) {
   const [topText, setTopText] = useState("");
   const [bottomText, setBottomText] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const [cookies] = useCookies(["userToken", "userId"]);
+  const [cookies] = useCookies(["userToken"]);
 
   const history = useHistory();
 

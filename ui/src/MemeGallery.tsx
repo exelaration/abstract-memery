@@ -6,6 +6,7 @@ import NavBar from "./NavBar";
 function MemeGallery(props: any) {
   const [memeResponses, setMemeResponses] = useState([]);
 
+
   useEffect(() => {
     function getMemeURLs() {
       axios.get("http://localhost:8080/meme").then((response) => {
