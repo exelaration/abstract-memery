@@ -13,5 +13,7 @@ public interface MemeService {
 
   public ArrayList<Meme> getMemes();
 
+  public ArrayList<Meme> getUserMemes(int userId);
+
   public ArrayList<Meme> getMemesWithText(String text);
 }

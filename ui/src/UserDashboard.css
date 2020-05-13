@@ -1,0 +1,28 @@
+.dashboard {
+  text-align: center;
+  background-color: #282c34;
+}
+
+.jumbotron {
+  background-color: #282c34;
+  color: white;
+}
+
+.dashboardHeader {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  padding-left: 2em;
+  padding-top: 2em;
+  justify-content: top;
+  color: white;
+}
+
+hr {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border: 1;
+  color: white;
+}

@@ -33,6 +33,11 @@ public class MemeController {
     return memeService.getMemes();
   }
 
+  @GetMapping(value = "/", params = "userId")
+  public ArrayList<Meme> getMemesForUserGallery(@RequestParam int userId) throws Exception {
+    return memeService.getUserMemes(userId);
+  }
+
   @GetMapping(value = "/", params = "text")
   public ArrayList<Meme> getMemesForSearch(@RequestParam String text) throws Exception {
     return memeService.getMemesWithText(text);

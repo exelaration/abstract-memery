@@ -191,7 +191,119 @@ public class MemeServiceTest {
     expectedMeme3.setMemeUrl(memeURL3);
     expectedMemes.add(expectedMeme3);
 
+    String expectedMemeUrl1 = expectedMeme1.getMemeUrl();
+    String expectedMemeUrl2 = expectedMeme2.getMemeUrl();
+    String expectedMemeUrl3 = expectedMeme3.getMemeUrl();
+
     Mockito.when(memeMetadataService.getMemes()).thenReturn(expectedMemes);
+    Mockito.when(fileStorageService.getFileData(expectedMeme1.getMemeName()))
+        .thenReturn(expectedMemeUrl1);
+    Mockito.when(fileStorageService.getFileData(expectedMeme2.getMemeName()))
+        .thenReturn(expectedMemeUrl2);
+    Mockito.when(fileStorageService.getFileData(expectedMeme3.getMemeName()))
+        .thenReturn(expectedMemeUrl3);
+
+    ArrayList<Meme> actualMemes = memeService.getMemes();
+    String actualMemeUrl1 = actualMemes.get(0).getMemeUrl();
+    String actualMemeUrl2 = actualMemes.get(1).getMemeUrl();
+    String actualMemeUrl3 = actualMemes.get(2).getMemeUrl();
+
+    assertEquals(expectedMemeUrl1, actualMemeUrl1);
+    assertEquals(expectedMemeUrl2, actualMemeUrl2);
+    assertEquals(expectedMemeUrl3, actualMemeUrl3);
+  }
+
+  @Test
+  public void getUserMemes_WhenFileStorageServiceThrowsException_expectNull() {
+    int userId = 1;
+    ArrayList<Meme> expectedMemes = new ArrayList<Meme>();
+    Meme testMeme = new Meme();
+    testMeme.setMemeName("testMeme");
+    expectedMemes.add(testMeme);
+
+    Mockito.when(memeMetadataService.getUserMemes(userId)).thenReturn(expectedMemes);
+    doThrow(new RuntimeException()).when(fileStorageService).getFileData(Mockito.any());
+    assertNull(memeService.getUserMemes(userId));
+  }
+
+  @Test
+  public void getUserMemes_WhenSuccessful_expectMemeURLs() {
+    int userId = 1;
+    ArrayList<Meme> expectedMemes = new ArrayList<Meme>();
+    Meme testMeme = new Meme();
+    testMeme.setMemeName("testMeme");
+    expectedMemes.add(testMeme);
+    String memeURL = "testMemeURL";
+    ArrayList<String> expectedURLs = new ArrayList<String>();
+    expectedURLs.add("testMemeURL");
+    String expectedMemeUrl = expectedURLs.get(0);
+
+    Mockito.when(memeMetadataService.getUserMemes(userId)).thenReturn(expectedMemes);
+    Mockito.when(fileStorageService.getFileData(Mockito.any())).thenReturn(memeURL);
+    String actualMemeUrl = memeService.getUserMemes(userId).get(0).getMemeUrl();
+
+    assertEquals(expectedMemeUrl, actualMemeUrl);
+  }
+
+  @Test
+  public void getUserMemes_WhenMemesDoNotExistLocally_expectNullMemes() {
+    int userId = 1;
+    ArrayList<Meme> expectedMemes = new ArrayList<Meme>();
+    Meme testMeme = new Meme();
+    testMeme.setMemeName("testMeme");
+    expectedMemes.add(testMeme);
+    String memeURL = null;
+    ArrayList<String> expectedURLs = new ArrayList<String>();
+    expectedURLs.add(memeURL);
+    String expectedMemeUrl = expectedURLs.get(0);
+
+    Mockito.when(memeMetadataService.getUserMemes(userId)).thenReturn(expectedMemes);
+    Mockito.when(fileStorageService.getFileData(Mockito.any())).thenReturn(memeURL);
+    String actualMemeUrl = memeService.getUserMemes(userId).get(0).getMemeUrl();
+
+    assertEquals(expectedMemeUrl, actualMemeUrl);
+  }
+
+  @Test
+  public void getUserMemes_WhenSomeMemesExistLocally_expectSomeMemes() {
+    int userId = 1;
+    String memeURL1 = "testMemeURL1";
+    String memeURL2 = null;
+    String memeURL3 = "testMemeURL3";
+    ArrayList<Meme> expectedMemes = new ArrayList<Meme>();
+    Meme expectedMeme1 = new Meme();
+    expectedMeme1.setMemeName("testMeme1");
+    expectedMeme1.setMemeUrl(memeURL1);
+    expectedMemes.add(expectedMeme1);
+    Meme expectedMeme2 = new Meme();
+    expectedMeme2.setMemeName("testMeme2");
+    expectedMeme2.setMemeUrl(memeURL2);
+    expectedMemes.add(expectedMeme2);
+    Meme expectedMeme3 = new Meme();
+    expectedMeme3.setMemeName("testMeme3");
+    expectedMeme3.setMemeUrl(memeURL3);
+    expectedMemes.add(expectedMeme3);
+
+    String expectedMemeUrl1 = expectedMeme1.getMemeUrl();
+    String expectedMemeUrl2 = expectedMeme2.getMemeUrl();
+    String expectedMemeUrl3 = expectedMeme3.getMemeUrl();
+
+    Mockito.when(memeMetadataService.getUserMemes(userId)).thenReturn(expectedMemes);
+    Mockito.when(fileStorageService.getFileData(expectedMeme1.getMemeName()))
+        .thenReturn(expectedMemeUrl1);
+    Mockito.when(fileStorageService.getFileData(expectedMeme2.getMemeName()))
+        .thenReturn(expectedMemeUrl2);
+    Mockito.when(fileStorageService.getFileData(expectedMeme3.getMemeName()))
+        .thenReturn(expectedMemeUrl3);
+
+    ArrayList<Meme> actualMemes = memeService.getUserMemes(userId);
+    String actualMemeUrl1 = actualMemes.get(0).getMemeUrl();
+    String actualMemeUrl2 = actualMemes.get(1).getMemeUrl();
+    String actualMemeUrl3 = actualMemes.get(2).getMemeUrl();
+
+    assertEquals(expectedMemeUrl1, actualMemeUrl1);
+    assertEquals(expectedMemeUrl2, actualMemeUrl2);
+    assertEquals(expectedMemeUrl3, actualMemeUrl3);
   }
 
   public void getMemesWithText_WhenFileStorageServiceThrowsException_expectNull() throws Exception {

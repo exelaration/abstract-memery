@@ -16,5 +16,7 @@ public interface MemeMetadataService {
 
   public ArrayList<Meme> getMemes();
 
+  public ArrayList<Meme> getUserMemes(int userId);
+
   public ArrayList<Meme> findByText(String text) throws Exception;
 }
