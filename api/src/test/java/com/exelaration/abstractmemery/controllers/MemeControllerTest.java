@@ -107,6 +107,7 @@ public class MemeControllerTest {
     mockMvc.perform(MockMvcRequestBuilders.get(url)).andExpect(ok);
   }
 
+  @Test
   public void getMemesForGallery_WhenMemeExists_ExpectStatus200andJSONreturn() throws Exception {
     ResultMatcher ok = MockMvcResultMatchers.status().isOk();
     String url = "/meme";
@@ -123,6 +124,39 @@ public class MemeControllerTest {
         .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(jsonPath("$", hasSize(1)))
         .andExpect(jsonPath("$[0].memeName", is("testMeme")));
+  }
+
+  @Test
+  public void getMemesForUserGallery_WhenMatchingUserGiven_ExpectStatus200() throws Exception {
+    ResultMatcher ok = MockMvcResultMatchers.status().isOk();
+    String url = "/meme/?userId=1";
+    ArrayList<Meme> expectedMemes = new ArrayList<Meme>();
+    Meme testMeme = new Meme();
+    testMeme.setMemeName("testMeme");
+    expectedMemes.add(testMeme);
+
+    when(memeService.getUserMemes(1)).thenReturn(expectedMemes);
+
+    mockMvc
+        .perform(MockMvcRequestBuilders.get(url))
+        .andExpect(ok)
+        .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_VALUE))
+        .andExpect(jsonPath("$", hasSize(1)))
+        .andExpect(jsonPath("$[0].memeName", is("testMeme")));
+  }
+
+  @Test
+  public void getMemesForUserGallery_WhenUserNotGiven_ExpectStatus400() throws Exception {
+    ResultMatcher badRequest = MockMvcResultMatchers.status().isBadRequest();
+    String url = "/meme/?userId=";
+    ArrayList<Meme> expectedMemes = new ArrayList<Meme>();
+    Meme testMeme = new Meme();
+    testMeme.setMemeName("testMeme");
+    expectedMemes.add(testMeme);
+
+    when(memeService.getUserMemes(1)).thenReturn(expectedMemes);
+
+    mockMvc.perform(MockMvcRequestBuilders.get(url)).andExpect(badRequest);
   }
 
   @Test

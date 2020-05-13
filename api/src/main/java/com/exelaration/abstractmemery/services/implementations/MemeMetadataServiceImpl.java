@@ -33,6 +33,10 @@ public class MemeMetadataServiceImpl implements MemeMetadataService {
     return memeRepository.findTop10ByOrderByIdDesc();
   }
 
+  public ArrayList<Meme> getUserMemes(int userId) {
+    return memeRepository.findByUserId(userId);
+  }
+
   public ArrayList<Meme> findByText(String text) throws Exception {
     if (text.length() > 1) {
       return memeRepository

@@ -13,4 +13,6 @@ public interface MemeRepository extends JpaRepository<Meme, Integer> {
   ArrayList<Meme>
       findTop10ByTopTextIgnoreCaseContainsOrBottomTextIgnoreCaseContainsOrMemeNameIgnoreCaseContains(
           String topText, String bottomText, String memeName);
+
+  ArrayList<Meme> findByUserId(int userId);
 }

@@ -37,20 +37,23 @@ function NavBar() {
   }
 
   function goToCreateMeme() {
-    if (cookies.userToken === "not logged in") {
-      alert("You must be logged in to access this page");
-      history.push("/login");
-    } else {
-      history.push("/create-meme");
-    }
+    changePage("/create-meme");
   }
 
   function goToSettings() {
+    changePage("/user/settings");
+  }
+
+  function goToDashboard() {
+    changePage("/user-dashboard");
+  }
+
+  function changePage(location: string) {
     if (cookies.userToken === "not logged in") {
       alert("You must be logged in to access this page");
       history.push("/login");
     } else {
-      history.push("/user/settings");
+      history.push(location);
     }
   }
 
@@ -62,6 +65,7 @@ function NavBar() {
         <Nav className="mr-auto">
           <Nav.Link href="/">Meme Gallery</Nav.Link>
           <Nav.Link onClick={goToCreateMeme}>Create a Meme</Nav.Link>
+          <Nav.Link onClick={goToDashboard}>View User Dashboard</Nav.Link>
         </Nav>
 
         <Form inline onSubmit={submitHandler}>
