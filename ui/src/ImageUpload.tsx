@@ -7,6 +7,7 @@ import InputGroup from "react-bootstrap/InputGroup";
 import "./ImageUpload.css";
 import MemeContent from "./MemeContent";
 import { useCookies } from "react-cookie";
+import ExistingImages from "./ExistingImages";
 
 type ImageProps = {
   topText: string;
@@ -66,6 +67,14 @@ function ImageUpload(props: ImageProps) {
     return file["type"].split("/")[0] === "image"; //returns true or false
   }
 
+  function sendImageData(imageData: string) {
+    setImageData(imageData);
+  }
+
+  function sendImageId(id: number) {
+    dispatch({ type: AppActions.updateImageID, value: id });
+  }
+
   return (
     <div className="upload">
       <MemeContent
@@ -90,6 +99,10 @@ function ImageUpload(props: ImageProps) {
             </Button>
           </InputGroup.Append>
         </InputGroup>
+        <ExistingImages
+          handleImageData={sendImageData}
+          handleImageId={sendImageId}
+        ></ExistingImages>
       </Form>
     </div>
   );

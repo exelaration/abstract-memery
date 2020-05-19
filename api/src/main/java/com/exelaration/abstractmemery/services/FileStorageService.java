@@ -4,5 +4,5 @@ public interface FileStorageService {
 
   public void save(String fileName, String urlData, String storageLocation);
 
-  public String getFileData(String fileName);
+  public String getFileData(String fileName, String fileType);
 }
