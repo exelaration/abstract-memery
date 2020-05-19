@@ -31,4 +31,6 @@ public class Meme {
 
   @Column(name = "user_id")
   private int userId;
+
+  private boolean isPublic;
 }

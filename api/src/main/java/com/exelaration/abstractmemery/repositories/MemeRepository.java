@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MemeRepository extends JpaRepository<Meme, Integer> {
 
-  ArrayList<Meme> findTop10ByOrderByIdDesc();
+  ArrayList<Meme> findTop10ByIsPublicTrueOrderByIdDesc();
 
   ArrayList<Meme>
       findTop10ByTopTextIgnoreCaseContainsOrBottomTextIgnoreCaseContainsOrMemeNameIgnoreCaseContains(
