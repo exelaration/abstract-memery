@@ -26,12 +26,14 @@ interface MemeResponse {
   bottomText: string;
   imageId: number;
   userId: number;
+  public: boolean;
 }
 
 function MemeUpload(props: MemeProps) {
   const { dispatch } = useContext(AppDispatchContext);
   const [topText, setTopText] = useState("");
   const [bottomText, setBottomText] = useState("");
+  const [isPublic, setIsPublic] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
   const [cookies] = useCookies(["userToken", "userId"]);
 
@@ -51,6 +53,10 @@ function MemeUpload(props: MemeProps) {
     let val = event.target.value;
     setBottomText(val);
     dispatch({ type: AppActions.updateBottomText, value: val });
+  }
+
+  function isPublicHandler(event: any) {
+    setIsPublic(event.target.checked);
   }
 
   function formSubmitHandler(event: any) {
@@ -76,6 +82,7 @@ function MemeUpload(props: MemeProps) {
               imageId: props.imageID,
               memeUrl: dataUrl,
               userId: cookies.userId,
+              public: isPublic,
             },
             { headers: { Authorization: cookies.userToken } }
           )
@@ -113,6 +120,14 @@ function MemeUpload(props: MemeProps) {
             onChange={bottomTextChangeHandler}
           />
         </InputGroup>
+        <br />
+        <Form.Check
+          label="Make Meme Public"
+          type="checkbox"
+          name="isPublic"
+          defaultChecked={isPublic}
+          onChange={isPublicHandler}
+        />
         <br />
         {errorMessage}
         <br />

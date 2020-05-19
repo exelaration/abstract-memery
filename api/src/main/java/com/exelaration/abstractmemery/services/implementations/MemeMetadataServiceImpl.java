@@ -30,7 +30,7 @@ public class MemeMetadataServiceImpl implements MemeMetadataService {
   }
 
   public ArrayList<Meme> getMemes() {
-    return memeRepository.findTop10ByOrderByIdDesc();
+    return memeRepository.findTop10ByIsPublicTrueOrderByIdDesc();
   }
 
   public ArrayList<Meme> getUserMemes(int userId) {

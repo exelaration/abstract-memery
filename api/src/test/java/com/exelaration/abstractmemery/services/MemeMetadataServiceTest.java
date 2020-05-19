@@ -25,7 +25,7 @@ public class MemeMetadataServiceTest {
 
   @Test
   public void getMemes_WhenReturnsNull_expectEmptyArray() {
-    Mockito.when(memeRepository.findTop10ByOrderByIdDesc()).thenReturn(null);
+    Mockito.when(memeRepository.findTop10ByIsPublicTrueOrderByIdDesc()).thenReturn(null);
 
     assertNull(memeMetadataService.getMemes());
   }
@@ -37,7 +37,7 @@ public class MemeMetadataServiceTest {
     testMeme.setMemeName("testMeme");
     expectedMemes.add(testMeme);
 
-    Mockito.when(memeRepository.findTop10ByOrderByIdDesc()).thenReturn(expectedMemes);
+    Mockito.when(memeRepository.findTop10ByIsPublicTrueOrderByIdDesc()).thenReturn(expectedMemes);
 
     assertEquals(
         expectedMemes.get(0).getMemeName(), memeMetadataService.getMemes().get(0).getMemeName());

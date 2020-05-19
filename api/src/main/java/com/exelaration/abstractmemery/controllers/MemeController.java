@@ -19,7 +19,6 @@ public class MemeController {
 
   @PostMapping("/")
   public Meme uploadMeme(@RequestBody Meme meme) throws Exception {
-
     return memeService.save(meme);
   }
 
