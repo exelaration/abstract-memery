@@ -20,6 +20,8 @@ public class MemeServiceImpl implements MemeService {
   @Autowired private MemeMetadataService memeMetadataService;
   @Autowired private FileStorageService fileStorageService;
 
+  private final String fileType = "memes/";
+
   public Meme save(Meme meme) {
     try {
       String memeUrl = meme.getMemeUrl();
@@ -42,7 +44,7 @@ public class MemeServiceImpl implements MemeService {
     }
     try {
       String memeName = meme.get().getMemeName();
-      memeData = fileStorageService.getFileData(memeName);
+      memeData = fileStorageService.getFileData(memeName, fileType);
     } catch (Exception e) {
       return null;
     }
@@ -67,7 +69,7 @@ public class MemeServiceImpl implements MemeService {
     ArrayList<Meme> memesWithData = new ArrayList<Meme>();
     for (Meme meme : memes) {
       try {
-        String memeData = fileStorageService.getFileData(meme.getMemeName());
+        String memeData = fileStorageService.getFileData(meme.getMemeName(), fileType);
         meme.setMemeUrl(memeData);
         memesWithData.add(meme);
       } catch (Exception e) {
@@ -86,7 +88,7 @@ public class MemeServiceImpl implements MemeService {
       ArrayList<Meme> memesWithData = new ArrayList<Meme>();
       for (Meme meme : memes) {
         try {
-          String memeData = fileStorageService.getFileData(meme.getMemeName());
+          String memeData = fileStorageService.getFileData(meme.getMemeName(), fileType);
           meme.setMemeUrl(memeData);
           memesWithData.add(meme);
         } catch (Exception e) {

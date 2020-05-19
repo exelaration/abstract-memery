@@ -31,8 +31,8 @@ public class FileStorageServiceImpl implements FileStorageService {
     }
   }
 
-  public String getFileData(String fileName) {
-    String fileLocation = uploadingDir + "memes/";
+  public String getFileData(String fileName, String fileType) {
+    String fileLocation = uploadingDir + fileType;
     File file = new File(fileLocation + fileName);
     String fileData = "";
     if (file.exists()) {

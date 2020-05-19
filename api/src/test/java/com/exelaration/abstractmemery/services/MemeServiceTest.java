@@ -89,12 +89,13 @@ public class MemeServiceTest {
   @Test
   public void getMeme_WhenMemeExists_ExpectMemeDisplayed() {
     String fileName = "test-file";
+    String fileType = "memes/";
     Meme mockMeme = new Meme();
     mockMeme.setMemeName(fileName);
     String expectedImageData = "image data";
 
     when(memeMetadataService.findById(5)).thenReturn(Optional.of(mockMeme));
-    when(fileStorageService.getFileData(fileName)).thenReturn(expectedImageData);
+    when(fileStorageService.getFileData(fileName, fileType)).thenReturn(expectedImageData);
     String actualImageData = memeService.getMeme(5);
 
     assertEquals(expectedImageData, actualImageData);
@@ -137,9 +138,10 @@ public class MemeServiceTest {
     Meme testMeme = new Meme();
     testMeme.setMemeName("testMeme");
     expectedMemes.add(testMeme);
-
     Mockito.when(memeMetadataService.findAll(Mockito.any())).thenReturn(expectedMemes);
-    doThrow(new RuntimeException()).when(fileStorageService).getFileData(Mockito.any());
+    doThrow(new RuntimeException())
+        .when(fileStorageService)
+        .getFileData(Mockito.any(), Mockito.any());
     assertNull(memeService.getMemes(page));
   }
 
@@ -155,7 +157,7 @@ public class MemeServiceTest {
     ArrayList<String> expectedURLs = new ArrayList<String>();
     expectedURLs.add("testMemeURL");
     Mockito.when(memeMetadataService.findAll(Mockito.any())).thenReturn(expectedMemes);
-    Mockito.when(fileStorageService.getFileData(Mockito.any())).thenReturn(memeURL);
+    Mockito.when(fileStorageService.getFileData(Mockito.any(), Mockito.any())).thenReturn(memeURL);
     assertEquals(expectedURLs.get(0), memeService.getMemes(page).get(0).getMemeUrl());
   }
 
@@ -171,7 +173,7 @@ public class MemeServiceTest {
     ArrayList<String> expectedURLs = new ArrayList<String>();
     expectedURLs.add(memeURL);
     Mockito.when(memeMetadataService.findAll(Mockito.any())).thenReturn(expectedMemes);
-    Mockito.when(fileStorageService.getFileData(Mockito.any())).thenReturn(memeURL);
+    Mockito.when(fileStorageService.getFileData(Mockito.any(), Mockito.any())).thenReturn(memeURL);
     assertEquals(expectedURLs.get(0), memeService.getMemes(page).get(0).getMemeUrl());
   }
 
@@ -180,6 +182,7 @@ public class MemeServiceTest {
     String memeURL1 = "testMemeURL1";
     String memeURL2 = null;
     String memeURL3 = "testMemeURL3";
+    String fileType = "memes/";
 
     ArrayList<Meme> expectedMemes = new ArrayList<Meme>();
     Meme expectedMeme1 = new Meme();
@@ -200,11 +203,11 @@ public class MemeServiceTest {
     String expectedMemeUrl3 = expectedMeme3.getMemeUrl();
 
     Mockito.when(memeMetadataService.findAll(Mockito.any())).thenReturn(expectedMemes);
-    Mockito.when(fileStorageService.getFileData(expectedMeme1.getMemeName()))
+    Mockito.when(fileStorageService.getFileData(expectedMeme1.getMemeName(), fileType))
         .thenReturn(expectedMemeUrl1);
-    Mockito.when(fileStorageService.getFileData(expectedMeme2.getMemeName()))
+    Mockito.when(fileStorageService.getFileData(expectedMeme2.getMemeName(), fileType))
         .thenReturn(expectedMemeUrl2);
-    Mockito.when(fileStorageService.getFileData(expectedMeme3.getMemeName()))
+    Mockito.when(fileStorageService.getFileData(expectedMeme3.getMemeName(), fileType))
         .thenReturn(expectedMemeUrl3);
 
     int page = 0;
@@ -227,7 +230,9 @@ public class MemeServiceTest {
     expectedMemes.add(testMeme);
 
     Mockito.when(memeMetadataService.getUserMemes(userId)).thenReturn(expectedMemes);
-    doThrow(new RuntimeException()).when(fileStorageService).getFileData(Mockito.any());
+    doThrow(new RuntimeException())
+        .when(fileStorageService)
+        .getFileData(Mockito.any(), Mockito.any());
     assertNull(memeService.getUserMemes(userId));
   }
 
@@ -244,7 +249,7 @@ public class MemeServiceTest {
     String expectedMemeUrl = expectedURLs.get(0);
 
     Mockito.when(memeMetadataService.getUserMemes(userId)).thenReturn(expectedMemes);
-    Mockito.when(fileStorageService.getFileData(Mockito.any())).thenReturn(memeURL);
+    Mockito.when(fileStorageService.getFileData(Mockito.any(), Mockito.any())).thenReturn(memeURL);
     String actualMemeUrl = memeService.getUserMemes(userId).get(0).getMemeUrl();
 
     assertEquals(expectedMemeUrl, actualMemeUrl);
@@ -263,7 +268,7 @@ public class MemeServiceTest {
     String expectedMemeUrl = expectedURLs.get(0);
 
     Mockito.when(memeMetadataService.getUserMemes(userId)).thenReturn(expectedMemes);
-    Mockito.when(fileStorageService.getFileData(Mockito.any())).thenReturn(memeURL);
+    Mockito.when(fileStorageService.getFileData(Mockito.any(), Mockito.any())).thenReturn(memeURL);
     String actualMemeUrl = memeService.getUserMemes(userId).get(0).getMemeUrl();
 
     assertEquals(expectedMemeUrl, actualMemeUrl);
@@ -272,6 +277,7 @@ public class MemeServiceTest {
   @Test
   public void getUserMemes_WhenSomeMemesExistLocally_expectSomeMemes() {
     int userId = 1;
+    String fileType = "memes/";
     String memeURL1 = "testMemeURL1";
     String memeURL2 = null;
     String memeURL3 = "testMemeURL3";
@@ -294,11 +300,11 @@ public class MemeServiceTest {
     String expectedMemeUrl3 = expectedMeme3.getMemeUrl();
 
     Mockito.when(memeMetadataService.getUserMemes(userId)).thenReturn(expectedMemes);
-    Mockito.when(fileStorageService.getFileData(expectedMeme1.getMemeName()))
+    Mockito.when(fileStorageService.getFileData(expectedMeme1.getMemeName(), fileType))
         .thenReturn(expectedMemeUrl1);
-    Mockito.when(fileStorageService.getFileData(expectedMeme2.getMemeName()))
+    Mockito.when(fileStorageService.getFileData(expectedMeme2.getMemeName(), fileType))
         .thenReturn(expectedMemeUrl2);
-    Mockito.when(fileStorageService.getFileData(expectedMeme3.getMemeName()))
+    Mockito.when(fileStorageService.getFileData(expectedMeme3.getMemeName(), fileType))
         .thenReturn(expectedMemeUrl3);
 
     ArrayList<Meme> actualMemes = memeService.getUserMemes(userId);
@@ -318,7 +324,9 @@ public class MemeServiceTest {
     actualMemes.add(testMeme);
 
     Mockito.when(memeMetadataService.findByText("test")).thenReturn(actualMemes);
-    doThrow(new RuntimeException()).when(fileStorageService).getFileData(Mockito.any());
+    doThrow(new RuntimeException())
+        .when(fileStorageService)
+        .getFileData(Mockito.any(), Mockito.any());
     assertNull(memeService.getMemesWithText("test"));
   }
 
@@ -331,7 +339,7 @@ public class MemeServiceTest {
     actualMemes.add(testMeme);
 
     Mockito.when(memeMetadataService.findByText("test")).thenReturn(actualMemes);
-    Mockito.when(fileStorageService.getFileData(Mockito.any())).thenReturn(memeURL);
+    Mockito.when(fileStorageService.getFileData(Mockito.any(), Mockito.any())).thenReturn(memeURL);
     assertEquals(memeURL, memeService.getMemesWithText("test").get(0).getMemeUrl());
   }
 
@@ -344,7 +352,7 @@ public class MemeServiceTest {
     String memeURL = null;
 
     Mockito.when(memeMetadataService.findByText("test")).thenReturn(actualMemes);
-    Mockito.when(fileStorageService.getFileData(Mockito.any())).thenReturn(memeURL);
+    Mockito.when(fileStorageService.getFileData(Mockito.any(), Mockito.any())).thenReturn(memeURL);
     assertEquals(memeURL, memeService.getMemesWithText("test").get(0).getMemeUrl());
   }
 
@@ -373,7 +381,7 @@ public class MemeServiceTest {
     expectedMemes.add(meme3);
 
     Mockito.when(memeMetadataService.findByText("test")).thenReturn(actualMemes);
-    Mockito.when(fileStorageService.getFileData(Mockito.any()))
+    Mockito.when(fileStorageService.getFileData(Mockito.any(), Mockito.any()))
         .thenReturn(meme1.getMemeUrl())
         .thenReturn("")
         .thenReturn(meme3.getMemeUrl());
