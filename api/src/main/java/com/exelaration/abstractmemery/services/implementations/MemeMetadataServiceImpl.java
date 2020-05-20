@@ -37,7 +37,7 @@ public class MemeMetadataServiceImpl implements MemeMetadataService {
   public ArrayList<Meme> findByText(String text) throws Exception {
     if (text.length() > 1) {
       return memeRepository
-          .findTop10ByTopTextIgnoreCaseContainsOrBottomTextIgnoreCaseContainsOrMemeNameIgnoreCaseContains(
+          .findTop10ByIsPublicTrueAndTopTextIgnoreCaseContainsOrBottomTextIgnoreCaseContainsOrMemeNameIgnoreCaseContains(
               text, text, text);
     } else {
       throw new IllegalArgumentException("Search query must contain more than one character");
