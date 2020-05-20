@@ -34,7 +34,7 @@ public class MemeMetadataServiceImpl implements MemeMetadataService {
   }
 
   public ArrayList<Meme> getUserMemes(int userId) {
-    return memeRepository.findByUserId(userId);
+    return memeRepository.findByUserIdOrderByIdDesc(userId);
   }
 
   public ArrayList<Meme> findByText(String text) throws Exception {
