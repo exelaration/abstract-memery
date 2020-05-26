@@ -12,9 +12,3 @@ RUN npm install
 RUN npm install react-scripts@3.3.1 -g
 
 CMD ["npm", "start"]
-
-FROM buildkite/puppeteer:latest
-WORKDIR /app
-COPY package.json yarn.lock ./
-RUN yarn && yarn cache clean
-COPY . .

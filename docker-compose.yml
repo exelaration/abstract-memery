@@ -11,6 +11,7 @@ services:
       - 3000:3000
     environment:
       - NODE_ENV=development
+    # command: sh -c "npm start && wait-for-it.sh localhost:3000 -- npm run test:visual"
 
   api:
     container_name: api
@@ -31,12 +32,15 @@ services:
     environment:
       POSTGRES_PASSWORD: memery
 
-  tests:
-    build: tests
+  e2e:
+    container_name: e2e
+    build: e2e
     volumes:
-      - "./src:/app/src"
-      - "./test:/app/test"
-    command: sh -c "npm run serve & wait-for-it.sh localhost:3000 -- npm run test:visual"
+      - ./e2e:/app
+    # command: sh -c "npm run serve & wait-for-it.sh localhost:3000 -- npm run test:visual"
+    command: sh -c "wait-for-it.sh ui:3000 -- npm run test:visual"
+    depends_on: 
+      - ui
 
 volumes:
   gradle_cache:
