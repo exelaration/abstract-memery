@@ -31,5 +31,12 @@ services:
     environment:
       POSTGRES_PASSWORD: memery
 
+  tests:
+    build: tests
+    volumes:
+      - "./src:/app/src"
+      - "./test:/app/test"
+    command: sh -c "npm run serve & wait-for-it.sh localhost:3000 -- npm run test:visual"
+
 volumes:
   gradle_cache:
