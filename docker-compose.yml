@@ -32,15 +32,17 @@ services:
     environment:
       POSTGRES_PASSWORD: memery
 
-  e2e:
-    container_name: e2e
-    build: e2e
-    volumes:
-      - ./e2e:/app
-    # command: sh -c "npm run serve & wait-for-it.sh localhost:3000 -- npm run test:visual"
-    command: sh -c "wait-for-it.sh ui:3000 -- npm run test:visual"
-    depends_on: 
-      - ui
+  # e2e:
+  #   container_name: e2e
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile.e2e
+  #   volumes:
+  #     - ./ui:/app
+  #   # command: sh -c "npm run serve & wait-for-it.sh localhost:3000 -- npm run test:visual"
+  #   command: sh -c "wait-for-it.sh ui:3000 -- npm run test:visual"
+  #   depends_on: 
+  #     - ui
 
 volumes:
   gradle_cache:
