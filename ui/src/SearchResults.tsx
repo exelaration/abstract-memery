@@ -7,6 +7,7 @@ function SearchPage(props: any) {
   const [memeResponses, setMemeResponses] = useState([]);
   const [displayMessage, setDisplayMessage] = useState("");
   const [isValid, setIsValid] = useState(true);
+  const [usernamesResponse, setUsernames] = useState([]);
 
   useEffect(() => {
     function getSearchURLs() {
@@ -29,6 +30,22 @@ function SearchPage(props: any) {
     getSearchURLs();
   }, [props.match.params.text]);
 
+  useEffect(() => {
+    function getUsernames() {
+      const response = axios
+        .get("http://localhost:8080/users/?text=" + props.match.params.text)
+        .then((response) => {
+          const usernamesResponse = response.data;
+          setUsernames(usernamesResponse);
+        })
+        .catch((error) => {
+          setDisplayMessage("There are no Users with this search criteria");
+        });
+      return response;
+    }
+    getUsernames();
+  }, [props.match.params.text]);
+
   if (!isValid) {
     return (
       <div className="search">
@@ -39,18 +56,12 @@ function SearchPage(props: any) {
         </header>
       </div>
     );
-  } else if (memeResponses.length === 0) {
-    return (
-      <div className="search">
-        <NavBar></NavBar>
-        <header className="searchHeader">
-          <h1>Search Results</h1>
-          <div>There are no images with this search criteria</div>
-        </header>
-      </div>
-    );
+  }
+  let memes;
+  if (memeResponses.length === 0) {
+    memes = <div>No image exists with this search criteria</div>;
   } else {
-    const memes = memeResponses.map(function (meme) {
+    memes = memeResponses.map(function (meme) {
       return (
         <div key={meme["id"]}>
           {" "}
@@ -63,16 +74,33 @@ function SearchPage(props: any) {
         </div>
       );
     });
-
-    return (
-      <div className="search">
-        <NavBar></NavBar>
-        <header className="searchHeader">
-          <h1>Search Results</h1>
-          <ul>{memes}</ul>
-        </header>
-      </div>
-    );
   }
+
+  let usernames;
+  if (usernamesResponse.length === 0) {
+    usernames = <div>No users exist with this search criteria</div>;
+  } else {
+    usernames = usernamesResponse.map(function (username) {
+      return (
+        <div>
+          {" "}
+          <div>{username}</div>
+        </div>
+      );
+    });
+  }
+
+  return (
+    <div className="search">
+      <NavBar></NavBar>
+      <header className="searchHeader">
+        <h1>Search Results</h1>
+        <h2>Users</h2>
+        <ul>{usernames}</ul>
+        <h2>Memes</h2>
+        <ul>{memes}</ul>
+      </header>
+    </div>
+  );
 }
 export default SearchPage;
