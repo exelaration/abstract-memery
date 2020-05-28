@@ -17,5 +17,7 @@ public interface MemeService {
 
   public ArrayList<Meme> getMemesWithText(String text);
 
+  public ArrayList<Meme> getMemesForProfilePage(String username);
+
   public int getCount();
 }

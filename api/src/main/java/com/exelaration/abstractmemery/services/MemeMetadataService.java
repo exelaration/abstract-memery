@@ -20,4 +20,6 @@ public interface MemeMetadataService {
   public ArrayList<Meme> findByText(String text) throws Exception;
 
   public long getCount();
+
+  public ArrayList<Meme> getUserProfileMemes(String username)
 }

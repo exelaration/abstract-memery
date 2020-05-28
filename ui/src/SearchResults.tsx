@@ -84,7 +84,9 @@ function SearchPage(props: any) {
       return (
         <div>
           {" "}
-          <h3>{username}</h3>
+          <h3>
+          <a href={"/user/" + username}>{username}</a>
+          </h3>
         </div>
       );
     });

@@ -47,4 +47,8 @@ public class MemeMetadataServiceImpl implements MemeMetadataService {
   public long getCount() {
     return memeRepository.countByIsPublicTrue();
   }
+
+  public ArrayList<Meme> getUserProfileMemes(String username) {
+    return memeRepository.(username);
+  }
 }
