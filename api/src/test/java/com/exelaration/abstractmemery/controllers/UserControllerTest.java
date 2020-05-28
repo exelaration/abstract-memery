@@ -1,12 +1,16 @@
 package com.exelaration.abstractmemery.controllers;
 
+import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 import com.exelaration.abstractmemery.domains.ApplicationUser;
+import com.exelaration.abstractmemery.services.UserService;
 import com.exelaration.abstractmemery.services.implementations.UserDetailsServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,6 +31,7 @@ public class UserControllerTest {
   private MockMvc mockMvc;
   @Autowired private UserController userController;
   @MockBean private UserDetailsServiceImpl userDetailsService;
+  @MockBean private UserService userService;
 
   @BeforeEach
   public void setUp() {
@@ -92,5 +97,37 @@ public class UserControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(testUser)))
         .andExpect(badRequest);
+  }
+
+  @Test
+  public void getUsersForSearch_WhenUsersExist_Expect200andArray() throws Exception {
+    ResultMatcher ok = MockMvcResultMatchers.status().isOk();
+    String url = "/users/?text=test";
+
+    ArrayList<String> expectedUsernames = new ArrayList<String>();
+    expectedUsernames.add("test@gmail.com");
+    when(userService.getUsersWithText(any())).thenReturn(expectedUsernames);
+
+    mockMvc
+        .perform(MockMvcRequestBuilders.get(url))
+        .andExpect(ok)
+        .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_VALUE))
+        .andExpect(jsonPath("$", hasSize(1)))
+        .andExpect(jsonPath("$[0]", is("test@gmail.com")));
+  }
+
+  @Test
+  public void getUsersForSearch_WhenUsersDoesNotExist_Expect200andEmptyArray() throws Exception {
+    ResultMatcher ok = MockMvcResultMatchers.status().isOk();
+    String url = "/users/?text=test";
+
+    ArrayList<String> expectedUsernames = new ArrayList<String>();
+    when(userService.getUsersWithText(any())).thenReturn(expectedUsernames);
+
+    mockMvc
+        .perform(MockMvcRequestBuilders.get(url))
+        .andExpect(ok)
+        .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_VALUE))
+        .andExpect(jsonPath("$", hasSize(0)));
   }
 }

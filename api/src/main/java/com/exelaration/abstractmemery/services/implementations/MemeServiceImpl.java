@@ -104,4 +104,9 @@ public class MemeServiceImpl implements MemeService {
   public int getCount() {
     return (int) memeMetadataService.getCount();
   }
+
+  public ArrayList<Meme> getMemesForProfilePage(String username) {
+    ArrayList<Meme> userMemes = memeMetadataService.getUserProfileMemes(username);
+    return getMemesFromFileSystem(userMemes);
+  }
 }

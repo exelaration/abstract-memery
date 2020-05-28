@@ -10,6 +10,7 @@ import Gallery from "./MemeGallery";
 import SearchResults from "./SearchResults";
 import UserSettings from "./UserSettings";
 import UserDashboard from "./UserDashboard";
+import ProfilePage from "./ProfilePage";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/create-meme" component={CreateMeme} exact />
         <Route path="/user-dashboard" component={UserDashboard} exact />
         <Route path="/search/:text" component={SearchResults} exact />
+        <Route path="/user/:username" component={ProfilePage} exact />
         <Route path="/user/settings" component={UserSettings} exact />
         <Route component={RouterError} />
       </Switch>

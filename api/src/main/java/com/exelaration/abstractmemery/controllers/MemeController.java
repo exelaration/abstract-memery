@@ -46,4 +46,9 @@ public class MemeController {
   public int getMemeCount() {
     return memeService.getCount();
   }
+
+  @GetMapping(value = "/", params = "username")
+  public ArrayList<Meme> getMemesForProfilePage(@RequestParam String username) throws Exception {
+    return memeService.getMemesForProfilePage(username);
+  }
 }
