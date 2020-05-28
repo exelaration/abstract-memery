@@ -9,7 +9,7 @@
     "@types/dom-to-image": "^2.6.0",
     "@types/expect-puppeteer": "2.2.1",
     "@types/jest": "^24.9.1",
-    "@types/jest-environment-puppeteer": "2.2.0",
+    "@types/jest-environment-puppeteer": "^2.2.0",
     "@types/jquery": "^3.3.34",
     "@types/jwt-decode": "^2.2.1",
     "@types/node": "^12.12.26",
@@ -29,7 +29,7 @@
     "react-cookie": "^4.0.3",
     "react-dom": "^16.12.0",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "3.4.1",
+    "react-scripts": "3.4.0",
     "typescript": "^3.7.5",
     "yup": "^0.28.3"
   },
